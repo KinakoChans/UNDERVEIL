@@ -236,10 +236,7 @@ body::before{
 
     color:#b30000;
 
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
+    display:block;   /* 🔥 penting */
 
     padding:40px;
 
@@ -250,8 +247,10 @@ body::before{
     text-shadow:0 0 10px red;
 
     animation:flickerBoot 0.15s infinite;
-}
 
+    text-align:left; /* 🔥 penting */
+}
+   
 @keyframes flickerBoot{
 
     0%{
@@ -358,8 +357,11 @@ body::before{
     margin-left:8px;
 
     animation:blink 0.7s infinite;
+   
+    display:inline;
+    vertical-align:bottom;
 }
-
+   
 @keyframes blink{
 
     0%{
