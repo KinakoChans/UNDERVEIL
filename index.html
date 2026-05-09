@@ -768,19 +768,28 @@ function startChatUI(){
     <div class="chat-container">
 
         <div class="chat-header">
-            NØX // UNDERVEIL SYSTEM
+            <span class="glow">UNDERVEIL // NØX TERMINAL</span>
+        </div>
+
+        <div class="chat-subheader">
+            UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline, where every choice, memory, and word echoes through the underground.
         </div>
 
         <div class="chat-box" id="chatBox"></div>
 
         <div class="chat-input-area">
-            <input id="input" placeholder="type message..." />
-            <button onclick="sendMessage()">SEND</button>
+
+            <input id="input" placeholder="TYPE MESSAGE..." class="terminal-input"/>
+
+            <button onclick="sendMessage()" class="terminal-btn">
+                SEND
+            </button>
+
         </div>
 
     </div>
     `;
-}
+  }
    
 </script>
 
