@@ -641,16 +641,43 @@ function showLogin(){
 // =========================
 function handleLogin(){
 
-    const u = document.getElementById("username").value;
-    const p = document.getElementById("password").value;
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value.trim();
 
+    // =========================
+    // CEK KOSONG SEMUA
+    // =========================
+    if(u === "" && p === ""){
+        showError("PLEASE ENTER USERNAME AND PASSWORD");
+        return;
+    }
+
+    // =========================
+    // CEK USERNAME KOSONG
+    // =========================
+    if(u === ""){
+        showError("USERNAME IS REQUIRED");
+        return;
+    }
+
+    // =========================
+    // CEK PASSWORD KOSONG
+    // =========================
+    if(p === ""){
+        showError("PASSWORD IS REQUIRED");
+        return;
+    }
+
+    // =========================
+    // LOGIN VALID
+    // =========================
     if(u === "NOX" && p === "nox123"){
         setState("chat");
     } else {
         showError("INVALID USERNAME / PASSWORD");
     }
 }
-
+   
 // =========================
 // ERROR EFFECT
 // =========================
