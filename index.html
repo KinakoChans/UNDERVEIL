@@ -463,16 +463,75 @@ body::before{
 const enterBtn =
 document.getElementById("enterBtn");
 
-/* =========================
-   ENTER EVENT
-========================= */
+// =========================
+// STATE SYSTEM
+// =========================
+let state = "boot";
 
+// =========================
+// ENTER BUTTON
+// =========================
 enterBtn.addEventListener("click", () => {
-
     startTransition();
-
 });
 
+// =========================
+// LOGIN FUNCTION (FRONTEND)
+// =========================
+async function login(username, password){
+
+    const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+        setState("chat");
+    } else {
+        showError(data.message);
+    }
+}
+
+// =========================
+// STATE CONTROLLER
+// =========================
+function setState(newState){
+
+    state = newState;
+
+    if(state === "login"){
+        showLogin();
+    }
+
+    if(state === "chat"){
+        showChat();
+    }
+}
+
+// =========================
+// ERROR DISPLAY
+// =========================
+function showError(msg){
+
+    console.log("[SYSTEM ERROR]", msg);
+
+    // nanti bisa kamu upgrade jadi UI glitch text
+}
+
+// =========================
+// PLACEHOLDER UI FUNCTIONS
+// =========================
+function showLogin(){
+    console.log("SHOW LOGIN SCREEN");
+}
+
+function showChat(){
+    console.log("SHOW CHAT SCREEN");
+}
+   
 /* =========================
    START TRANSITION
 ========================= */
