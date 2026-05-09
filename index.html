@@ -408,6 +408,113 @@ body::before{
     color:black;
     box-shadow:0 0 15px red;
 }
+
+   dhdhhdh
+/* =========================
+   CHAT DARK PIXEL UI
+========================= */
+
+.chat-container{
+    width:100%;
+    height:100vh;
+    background:black;
+    color:#ff2b2b;
+    font-family:'Press Start 2P', cursive;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+}
+
+/* glitch noise overlay vibe */
+.chat-container::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:url("https://i.imgur.com/8QfQ5QY.png");
+    opacity:0.04;
+    pointer-events:none;
+    animation:noiseMove 0.2s infinite;
+}
+
+@keyframes noiseMove {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(-1px,1px); }
+    50% { transform: translate(1px,-1px); }
+    75% { transform: translate(-1px,-1px); }
+    100% { transform: translate(0,0); }
+}
+
+/* HEADER */
+.chat-header{
+    padding:12px;
+    border-bottom:1px solid #ff2b2b;
+    text-shadow:0 0 10px red;
+    font-size:12px;
+}
+
+/* SUB TEXT LORE */
+.chat-subheader{
+    padding:10px;
+    font-size:8px;
+    color:#aa0000;
+    opacity:0.8;
+    line-height:1.5;
+    border-bottom:1px solid rgba(255,0,0,0.3);
+}
+
+/* CHAT BOX */
+.chat-box{
+    flex:1;
+    padding:10px;
+    overflow-y:auto;
+    font-size:10px;
+    line-height:1.8;
+}
+
+/* INPUT AREA */
+.chat-input-area{
+    display:flex;
+    border-top:1px solid #ff2b2b;
+}
+
+/* INPUT STYLE */
+.terminal-input{
+    padding:12px;
+    font-family:'Press Start 2P';
+    font-size:9px;
+    outline:none;
+    text-transform:uppercase;
+}
+
+.terminal-input:focus{
+    border:1px solid #ff3b3b;
+    box-shadow:0 0 18px rgba(255,0,0,0.6);
+    background:rgba(20,0,0,0.2);
+}
+
+/* BUTTON STYLE */
+.terminal-btn{
+    background:black;
+    color:#ff2b2b;
+    border-left:1px solid #ff2b2b;
+    padding:12px;
+    font-family:'Press Start 2P';
+    font-size:9px;
+    cursor:pointer;
+}
+
+.terminal-btn:hover{
+    background:#ff2b2b;
+    color:black;
+    box-shadow:0 0 15px red;
+}
+
+/* GLITCH TEXT */
+.glow{
+    text-shadow:0 0 10px red, 0 0 20px darkred;
+}
    
 </style>
 </head>
