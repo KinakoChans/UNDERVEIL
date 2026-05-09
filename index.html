@@ -343,6 +343,39 @@ body::before{
 }
 
 /* =========================
+   TERMINAL CURSOR
+========================= */
+
+.cursor{
+
+    display:inline-block;
+
+    width:10px;
+    height:14px;
+
+    background:#b30000;
+
+    margin-left:8px;
+
+    animation:blink 0.7s infinite;
+}
+
+@keyframes blink{
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:0;
+    }
+
+    100%{
+        opacity:1;
+    }
+}
+   
+/* =========================
    RESPONSIVE
 ========================= */
 
@@ -486,7 +519,7 @@ function typeBoot(){
         "[ SYSTEM ] Searching for entity...",
         "[ NØX ] ...Can you hear me?",
         "",
-        "[ ACCESS GRANTED ]"
+        "[ ACCESS GRANTED ] █"
 
     ];
 
@@ -498,7 +531,9 @@ function typeBoot(){
 
             setTimeout(() => {
 
-                alert("NEXT: CHAT PAGE");
+                document.body.innerHTML += `
+                <div class="cursor"></div>
+                `;
 
             }, 1200);
 
