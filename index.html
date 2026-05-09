@@ -563,6 +563,9 @@ function setState(newState){
 // LOGIN UI (GLITCH STYLE)
 // =========================
 function showLogin(){
+   
+   document.body.classList.remove("glitch");
+document.body.style.animation = "";
 
     document.body.innerHTML = `
     <div class="boot-screen">
