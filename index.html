@@ -563,9 +563,9 @@ function setState(newState){
 // LOGIN UI (GLITCH STYLE)
 // =========================
 function showLogin(){
-   
-   document.body.classList.remove("glitch");
-document.body.style.animation = "";
+
+    document.body.classList.remove("glitch");
+    document.body.style.animation = "";
 
     document.body.innerHTML = `
     <div class="boot-screen">
@@ -576,32 +576,26 @@ document.body.style.animation = "";
                 [ SYSTEM ] AUTH REQUIRED
             </div>
 
-            <input id="username" placeholder="USERNAME"
-                style="padding:10px;background:black;color:red;
-                border:1px solid red;font-family:inherit;">
+            <input id="username" class="terminal-input" placeholder="USERNAME">
 
             <br><br>
 
-            <input id="password" type="password" placeholder="PASSWORD"
-                style="padding:10px;background:black;color:red;
-                border:1px solid red;font-family:inherit;">
+            <input id="password" type="password" class="terminal-input" placeholder="PASSWORD">
 
             <br><br>
 
-            <button onclick="handleLogin()"
-                style="padding:10px 20px;background:black;color:red;
-                border:1px solid red;cursor:pointer;">
+            <button onclick="handleLogin()" class="terminal-btn">
                 LOGIN
             </button>
 
-            <div id="error" style="margin-top:15px;color:#ff0000;"></div>
+            <div id="error" style="margin-top:15px;color:#ff2b2b;"></div>
 
         </div>
 
     </div>
     `;
-}
-
+   }
+   
 // =========================
 // LOGIN CHECK (HARDCODED)
 // =========================
