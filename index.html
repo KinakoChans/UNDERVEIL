@@ -236,7 +236,10 @@ body::before{
 
     color:#b30000;
 
-    display:block;   /* 🔥 penting */
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
 
     padding:40px;
 
@@ -247,10 +250,8 @@ body::before{
     text-shadow:0 0 10px red;
 
     animation:flickerBoot 0.15s infinite;
-
-    text-align:left; /* 🔥 penting */
 }
-   
+
 @keyframes flickerBoot{
 
     0%{
@@ -357,11 +358,8 @@ body::before{
     margin-left:8px;
 
     animation:blink 0.7s infinite;
-   
-    display:inline;
-    vertical-align:bottom;
 }
-   
+
 @keyframes blink{
 
     0%{
@@ -527,40 +525,37 @@ function typeBoot(){
 
     let lineIndex = 0;
 
-    // ✅ BUAT 1 CURSOR DI AWAL (JANGAN DI AKHIR)
-    const cursor = document.createElement("span");
-    cursor.className = "cursor";
-    cursor.textContent = "█";
-    bootText.appendChild(cursor);
-
-    function moveCursor(){
-        // selalu pindahkan cursor ke paling akhir
-        bootText.appendChild(cursor);
-    }
-
     function typeLine(){
 
         if(lineIndex >= lines.length){
-            moveCursor(); // pastikan cursor tetap di ujung
+
+            setTimeout(() => {
+
+                document.body.innerHTML += `
+<div class="cursor"></div>
+`;
+
+            }, 1200);
+
             return;
         }
 
         let text = lines[lineIndex];
+
         let charIndex = 0;
 
         let line =
         document.createElement("div");
 
-        bootText.insertBefore(line, cursor); // penting!
+        bootText.appendChild(line);
 
         const interval =
         setInterval(() => {
 
-            line.innerHTML += text.charAt(charIndex);
+            line.innerHTML +=
+            text.charAt(charIndex);
 
             charIndex++;
-
-            moveCursor(); // 🔥 INI KUNCI: cursor selalu ikut
 
             if(charIndex >= text.length){
 
@@ -576,7 +571,7 @@ function typeBoot(){
 
     typeLine();
 }
-   
+
 </script>
 
 </body>
