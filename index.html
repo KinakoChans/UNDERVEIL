@@ -761,6 +761,26 @@ function typeChatBoot(){
 
     type();
 }
+
+function startChatUI(){
+
+    document.body.innerHTML = `
+    <div class="chat-container">
+
+        <div class="chat-header">
+            NØX // UNDERVEIL SYSTEM
+        </div>
+
+        <div class="chat-box" id="chatBox"></div>
+
+        <div class="chat-input-area">
+            <input id="input" placeholder="type message..." />
+            <button onclick="sendMessage()">SEND</button>
+        </div>
+
+    </div>
+    `;
+}
    
 </script>
 
