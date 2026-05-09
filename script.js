@@ -1,3 +1,6 @@
+// =========================
+// INITIAL RENDER (BIAR TIDAK KOSONG)
+// =========================
 document.getElementById("app").innerHTML = `
 <div class="container">
 
@@ -24,13 +27,15 @@ document.getElementById("app").innerHTML = `
 let state = "boot";
 
 // =========================
-// ENTER BUTTON
+// ENTER BUTTON (HARUS SETELAH RENDER)
 // =========================
-const enterBtn = document.getElementById("enterBtn");
+setTimeout(() => {
+    const enterBtn = document.getElementById("enterBtn");
 
-if (enterBtn) {
-    enterBtn.addEventListener("click", startTransition);
-}
+    if (enterBtn) {
+        enterBtn.addEventListener("click", startTransition);
+    }
+}, 0);
 
 // =========================
 // START TRANSITION (BOOT SCREEN)
@@ -55,7 +60,7 @@ function startTransition(){
 }
 
 // =========================
-// BOOT TYPEWRITER
+// TYPEWRITER BOOT
 // =========================
 function typeBoot(){
 
@@ -185,7 +190,7 @@ function showError(msg){
 }
 
 // =========================
-// CHAT SCREEN (DUMMY)
+// CHAT SCREEN
 // =========================
 function showChat(){
 
