@@ -513,57 +513,44 @@ function typeBoot(){
     document.getElementById("bootText");
 
     const lines = [
-
         "[ SYSTEM ] Restoring underground memories...",
         "[ SYSTEM ] Timeline corruption detected...",
         "[ SYSTEM ] Searching for entity...",
         "[ NØX ] ...Can you hear me?",
         "",
         "[ ACCESS GRANTED ]"
-
     ];
 
     let lineIndex = 0;
 
+    // ✅ BUAT CURSOR SEKALI SAJA
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    cursor.textContent = "█";
+
+    bootText.appendChild(cursor);
+
     function typeLine(){
 
-        if(lineIndex >= lines.length){
+        if(lineIndex >= lines.length) return;
 
-            setTimeout(() => {
+        const lineText = lines[lineIndex];
+        const line = document.createElement("div");
 
-                document.body.innerHTML += `
-<div class="cursor"></div>
-`;
-
-            }, 1200);
-
-            return;
-        }
-
-        let text = lines[lineIndex];
+        // taruh sebelum cursor
+        bootText.insertBefore(line, cursor);
 
         let charIndex = 0;
 
-        let line =
-        document.createElement("div");
+        const interval = setInterval(() => {
 
-        bootText.appendChild(line);
-
-        const interval =
-        setInterval(() => {
-
-            line.innerHTML +=
-            text.charAt(charIndex);
-
+            line.textContent += lineText.charAt(charIndex);
             charIndex++;
 
-            if(charIndex >= text.length){
-
+            if(charIndex >= lineText.length){
                 clearInterval(interval);
-
                 lineIndex++;
-
-                setTimeout(typeLine, 350);
+                setTimeout(typeLine, 400);
             }
 
         }, 30);
