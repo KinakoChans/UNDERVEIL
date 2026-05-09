@@ -529,17 +529,20 @@ function typeBoot(){
 
         if(lineIndex >= lines.length){
 
-            setTimeout(() => {
+    setTimeout(() => {
 
-                document.body.innerHTML += `
-<div class="cursor"></div>
-`;
+        const lastLine =
+        bootText.lastElementChild;
 
-            }, 1200);
+        lastLine.innerHTML += `
+        <span class="cursor"></span>
+        `;
 
-            return;
-        }
+    }, 300);
 
+    return;
+}
+       
         let text = lines[lineIndex];
 
         let charIndex = 0;
