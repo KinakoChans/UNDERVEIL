@@ -525,38 +525,40 @@ function typeBoot(){
 
     let lineIndex = 0;
 
-    function typeLine(){
-
-        if(lineIndex >= lines.length){
-
-            setTimeout(() => {
-
-                const cursor = document.createElement("span");
+    // ✅ BUAT 1 CURSOR DI AWAL (JANGAN DI AKHIR)
+    const cursor = document.createElement("span");
     cursor.className = "cursor";
     cursor.textContent = "█";
     bootText.appendChild(cursor);
 
-            }, 1200);
+    function moveCursor(){
+        // selalu pindahkan cursor ke paling akhir
+        bootText.appendChild(cursor);
+    }
 
+    function typeLine(){
+
+        if(lineIndex >= lines.length){
+            moveCursor(); // pastikan cursor tetap di ujung
             return;
         }
 
         let text = lines[lineIndex];
-
         let charIndex = 0;
 
         let line =
         document.createElement("div");
 
-        bootText.appendChild(line);
+        bootText.insertBefore(line, cursor); // penting!
 
         const interval =
         setInterval(() => {
 
-            line.innerHTML +=
-            text.charAt(charIndex);
+            line.innerHTML += text.charAt(charIndex);
 
             charIndex++;
+
+            moveCursor(); // 🔥 INI KUNCI: cursor selalu ikut
 
             if(charIndex >= text.length){
 
@@ -572,7 +574,7 @@ function typeBoot(){
 
     typeLine();
 }
-
+   
 </script>
 
 </body>
