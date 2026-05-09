@@ -1,3 +1,23 @@
+document.getElementById("app").innerHTML = `
+<div class="container">
+
+    <div class="title">UNDERVEIL</div>
+
+    <div class="greeting">
+        > Connection established...<br><br>
+        > Welcome back, lost soul.
+    </div>
+
+    <div class="desc">
+        UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline,
+        where every choice, memory, and word echoes through the underground.
+    </div>
+
+    <button class="enter-btn" id="enterBtn">ENTER</button>
+
+</div>
+`;
+
 // =========================
 // STATE SYSTEM
 // =========================
