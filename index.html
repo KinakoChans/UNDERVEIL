@@ -304,7 +304,44 @@ body::before{
         filter:hue-rotate(10deg);
     }
 }
-   
+
+/* =========================
+   RED FLASH
+========================= */
+
+.red-flash{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background:red;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    mix-blend-mode:screen;
+
+    animation:redFlash 0.2s infinite;
+}
+
+@keyframes redFlash{
+
+    0%{
+        opacity:0;
+    }
+
+    50%{
+        opacity:0.08;
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -341,6 +378,8 @@ body::before{
 <!-- CRT Overlay -->
 
 <div class="scanline"></div>
+
+<div class="red-flash"></div>
 
 <!-- Main Container -->
 
