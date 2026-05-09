@@ -638,15 +638,62 @@ function showChat(){
 
     document.body.innerHTML = `
     <div class="boot-screen">
-
-        <div>
-            [ NØX AI SYSTEM ONLINE ]<br><br>
-            CHAT MODE ACTIVATED...
-        </div>
-
+        <div id="chatBootText"></div>
     </div>
     `;
-            }
+
+    typeChatBoot();
+}
+
+   function typeChatBoot(){
+
+    const el = document.getElementById("chatBootText");
+
+    const lines = [
+        "[ NØX AI SYSTEM ONLINE ]",
+        "CHAT MODE ACTIVATED..."
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let currentLine = null;
+
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    cursor.textContent = "█";
+
+    function type(){
+
+        if(lineIndex >= lines.length){
+            return; // selesai
+        }
+
+        const text = lines[lineIndex];
+
+        // bikin baris baru
+        if(charIndex === 0){
+            currentLine = document.createElement("div");
+            el.appendChild(currentLine);
+            currentLine.appendChild(cursor);
+        }
+
+        // selesai 1 line
+        if(charIndex >= text.length){
+            lineIndex++;
+            charIndex = 0;
+            setTimeout(type, 400);
+            return;
+        }
+
+        const node = document.createTextNode(text.charAt(charIndex));
+        currentLine.insertBefore(node, cursor);
+
+        charIndex++;
+        setTimeout(type, 40);
+    }
+
+    type();
+   }
    
 </script>
 
