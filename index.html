@@ -1,36 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>UNDERVEIL</title>
+<title>UNDERVEIL</title>
 
-  <style>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    body{
-      background:black;
-      color:white;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      flex-direction:column;
-      font-family:monospace;
-    }
+<style>
 
-    button{
-      margin-top:20px;
-      padding:10px 20px;
-      cursor:pointer;
-    }
+body{
+    background:#050505;
+    color:#e5e5e5;
+    font-family:'Press Start 2P', cursive;
 
-  </style>
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    overflow:hidden;
+}
+
+.title{
+    font-size:32px;
+
+    margin-bottom:30px;
+
+    text-shadow:
+    0 0 5px white,
+    0 0 15px #888;
+}
+
+.greeting{
+    font-size:10px;
+
+    text-align:center;
+
+    line-height:2;
+}
+
+button{
+
+    margin-top:40px;
+
+    padding:14px 24px;
+
+    background:transparent;
+
+    color:white;
+
+    border:3px solid white;
+
+    font-family:'Press Start 2P', cursive;
+
+    cursor:pointer;
+}
+
+button:hover{
+
+    background:white;
+
+    color:black;
+}
+
+</style>
 
 </head>
 <body>
 
-<h1>UNDERVEIL</h1>
+<div class="title">
+UNDERVEIL
+</div>
+
+<div class="greeting">
+> Connection established...<br><br>
+> Welcome back, lost soul.
+</div>
 
 <button id="enterBtn">
 ENTER
@@ -42,7 +91,7 @@ document
 .getElementById("enterBtn")
 .addEventListener("click", () => {
 
-    alert("UNDERVEIL WORKING");
+    alert("UNDERVEIL ENTERED");
 
 });
 
