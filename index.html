@@ -531,9 +531,10 @@ function typeBoot(){
 
             setTimeout(() => {
 
-                document.body.innerHTML += `
-<div class="cursor"></div>
-`;
+                const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    cursor.textContent = "█";
+    bootText.appendChild(cursor);
 
             }, 1200);
 
