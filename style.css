@@ -1,0 +1,39 @@
+/* =========================
+   TERMINAL INPUT & BUTTON
+========================= */
+
+.terminal-input{
+    background:black;
+    color:#ff2b2b;
+    border:1px solid #ff2b2b;
+    padding:10px;
+    font-family:'Press Start 2P', monospace;
+    font-size:10px;
+    outline:none;
+    width:220px;
+    text-transform:uppercase;
+    box-shadow:0 0 8px rgba(255,0,0,0.3);
+}
+
+.terminal-input:focus{
+    box-shadow:0 0 15px rgba(255,0,0,0.6);
+}
+
+.terminal-btn{
+    margin-top:10px;
+    padding:10px 18px;
+    background:black;
+    color:#ff2b2b;
+    border:1px solid #ff2b2b;
+    font-family:'Press Start 2P', monospace;
+    font-size:10px;
+    cursor:pointer;
+    transition:0.2s;
+    letter-spacing:1px;
+}
+
+.terminal-btn:hover{
+    background:#ff2b2b;
+    color:black;
+    box-shadow:0 0 15px red;
+}
