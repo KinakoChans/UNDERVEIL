@@ -535,7 +535,15 @@ function typeBoot(){
 
     function type(){
 
-        if(lineIndex >= lines.length) return;
+        // 🔥 FIX: kalau semua line selesai → pindah ke login
+        if(lineIndex >= lines.length){
+
+            setTimeout(() => {
+                setState("login"); // 👈 INI YANG NENTUIN PINDAH KE LOGIN
+            }, 800);
+
+            return;
+        }
 
         const text = lines[lineIndex];
 
@@ -544,6 +552,8 @@ function typeBoot(){
 
             currentLineEl = document.createElement("div");
             bootText.appendChild(currentLineEl);
+
+            // cursor selalu nempel di line aktif
             currentLineEl.appendChild(cursor);
         }
 
@@ -556,7 +566,7 @@ function typeBoot(){
             return;
         }
 
-        // 🔥 FIX UTAMA: jangan pakai innerHTML / textContent gabungan
+        // 🔥 ngetik karakter per karakter (aman, tidak rusak)
         const charNode = document.createTextNode(text.charAt(charIndex));
         currentLineEl.insertBefore(charNode, cursor);
 
