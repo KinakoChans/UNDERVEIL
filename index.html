@@ -9,142 +9,305 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================
+   RESET
+========================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
+/* =========================
+   BODY
+========================= */
+
 body{
     background:#050505;
     color:#e5e5e5;
+
     font-family:'Press Start 2P', cursive;
+
     height:100vh;
+
     overflow:hidden;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     position:relative;
 }
 
-/* Background pixel glow */
+/* =========================
+   BACKGROUND GLOW
+========================= */
+
 body::before{
+
     content:"";
+
     position:absolute;
+
     width:100%;
     height:100%;
+
     background:
-    radial-gradient(circle at center,
-    rgba(120,120,120,0.08),
-    transparent 60%);
+    radial-gradient(
+        circle at center,
+        rgba(120,120,120,0.08),
+        transparent 60%
+    );
+
     animation:pulse 4s infinite;
 }
 
+/* Glow Animation */
+
 @keyframes pulse{
-    0%{opacity:0.3;}
-    50%{opacity:1;}
-    100%{opacity:0.3;}
+
+    0%{
+        opacity:0.3;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0.3;
+    }
 }
+
+/* =========================
+   CRT SCANLINE
+========================= */
+
+.scanline{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background:
+    repeating-linear-gradient(
+        to bottom,
+
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+
+        transparent 1px,
+        transparent 3px
+    );
+
+    pointer-events:none;
+
+    z-index:1;
+}
+
+/* =========================
+   CONTAINER
+========================= */
 
 .container{
+
     text-align:center;
+
     z-index:2;
+
     padding:20px;
+
+    width:90%;
+    max-width:900px;
 }
 
+/* =========================
+   TITLE
+========================= */
+
 .title{
+
     font-size:38px;
+
     color:white;
+
     text-shadow:
     0 0 5px white,
     0 0 15px #888;
+
     margin-bottom:30px;
+
     animation:flicker 2s infinite;
 }
 
+/* Flicker Animation */
+
 @keyframes flicker{
+
     0%,18%,22%,25%,53%,57%,100%{
         opacity:1;
     }
+
     20%,24%,55%{
         opacity:0.5;
     }
 }
 
+/* =========================
+   GREETING
+========================= */
+
 .greeting{
+
     font-size:12px;
+
     color:#bdbdbd;
+
     margin-bottom:25px;
+
     line-height:2;
 }
 
+/* =========================
+   DESCRIPTION
+========================= */
+
 .desc{
+
     font-size:10px;
+
     color:#777;
+
     max-width:700px;
+
     line-height:2;
+
     margin:auto;
 }
 
+/* =========================
+   ENTER BUTTON
+========================= */
+
 .enter-btn{
+
     margin-top:40px;
+
     padding:14px 28px;
+
     border:3px solid #e5e5e5;
+
     background:transparent;
+
     color:white;
+
     font-family:'Press Start 2P', cursive;
+
     cursor:pointer;
+
     transition:0.2s;
 }
 
+/* Hover */
+
 .enter-btn:hover{
+
     background:white;
+
     color:black;
-    box-shadow:0 0 15px white;
+
+    box-shadow:
+    0 0 15px white;
 }
 
-.scanline{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:
-    repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.03),
-        rgba(255,255,255,0.03) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-    pointer-events:none;
-    z-index:1;
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+    .title{
+        font-size:24px;
+    }
+
+    .greeting{
+        font-size:9px;
+    }
+
+    .desc{
+        font-size:8px;
+    }
+
+    .enter-btn{
+        font-size:8px;
+        padding:12px 18px;
+    }
 }
+
 </style>
 </head>
+
 <body>
+
+<!-- CRT Overlay -->
 
 <div class="scanline"></div>
 
+<!-- Main Container -->
+
 <div class="container">
+
+    <!-- Logo -->
 
     <div class="title">
         UNDERVEIL
     </div>
 
+    <!-- Greeting -->
+
     <div class="greeting">
+
         > Connection established...<br><br>
+
         > Welcome back, lost soul.
+
     </div>
+
+    <!-- Description -->
 
     <div class="desc">
+
         UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline,
         where every choice, memory, and word echoes through the underground.
+
     </div>
 
-    <button class="enter-btn">
+    <!-- Enter Button -->
+
+    <button class="enter-btn" id="enterBtn">
+
         ENTER
+
     </button>
 
 </div>
+
+<!-- Script -->
+
+<script>
+
+document
+.getElementById("enterBtn")
+.addEventListener("click", () => {
+
+    alert("UNDERVEIL ENTERED");
+
+});
+
+</script>
 
 </body>
 </html>
