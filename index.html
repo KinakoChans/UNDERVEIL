@@ -350,16 +350,18 @@ body::before{
 
     display:inline-block;
 
-    width:10px;
+    width:8px;
     height:14px;
 
     background:#b30000;
 
-    margin-left:8px;
+    margin-left:4px;
+
+    vertical-align:middle;
 
     animation:blink 0.7s infinite;
 }
-
+   
 @keyframes blink{
 
     0%{
@@ -553,23 +555,40 @@ function typeBoot(){
         bootText.appendChild(line);
 
         const interval =
-        setInterval(() => {
+setInterval(() => {
 
-            line.innerHTML +=
-            text.charAt(charIndex);
+    /* Remove old cursor */
 
-            charIndex++;
+    line.innerHTML =
+    line.innerHTML.replace(
+        '<span class="cursor"></span>',
+        ''
+    );
 
-            if(charIndex >= text.length){
+    /* Add next character */
 
-                clearInterval(interval);
+    line.innerHTML +=
+    text.charAt(charIndex);
 
-                lineIndex++;
+    /* Add blinking cursor */
 
-                setTimeout(typeLine, 350);
-            }
+    line.innerHTML +=
+    '<span class="cursor"></span>';
 
-        }, 30);
+    charIndex++;
+
+    if(charIndex >= text.length){
+
+        clearInterval(interval);
+
+        /* Keep cursor at end */
+
+        lineIndex++;
+
+        setTimeout(typeLine, 350);
+    }
+
+}, 30);
     }
 
     typeLine();
