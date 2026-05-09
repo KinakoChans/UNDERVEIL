@@ -527,46 +527,47 @@ function typeBoot(){
     let lineIndex = 0;
     let charIndex = 0;
 
+    let currentLineEl = null;
+
     const cursor = document.createElement("span");
     cursor.className = "cursor";
     cursor.textContent = "█";
-    bootText.appendChild(cursor);
 
-    function moveCursor(){
-        bootText.appendChild(cursor);
-    }
+    function type(){
 
-    function typeLine(){
+        if(lineIndex >= lines.length) return;
 
-        if(lineIndex >= lines.length){
-            moveCursor();
+        const text = lines[lineIndex];
+
+        // kalau pindah line
+        if(charIndex === 0){
+
+            currentLineEl = document.createElement("div");
+            bootText.appendChild(currentLineEl);
+
+            // 🔥 penting: cursor selalu masuk ke line aktif
+            currentLineEl.appendChild(cursor);
+        }
+
+        if(charIndex >= text.length){
+
+            lineIndex++;
+            charIndex = 0;
+            setTimeout(type, 400);
             return;
         }
 
-        let text = lines[lineIndex];
-        let line = document.createElement("div");
+        currentLineEl.innerHTML =
+        currentLineEl.textContent + text.charAt(charIndex);
 
-        bootText.insertBefore(line, cursor);
+        currentLineEl.appendChild(cursor); // 🔥 selalu nempel di line aktif
 
-        const interval =
-        setInterval(() => {
+        charIndex++;
 
-            line.innerHTML += text.charAt(charIndex);
-            charIndex++;
-
-            moveCursor();
-
-            if(charIndex >= text.length){
-                clearInterval(interval);
-                lineIndex++;
-                charIndex = 0;
-                setTimeout(typeLine, 350);
-            }
-
-        }, 30);
+        setTimeout(type, 35);
     }
 
-    typeLine();
+    type();
 }
 
 </script>
