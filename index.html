@@ -513,51 +513,65 @@ function typeBoot(){
     document.getElementById("bootText");
 
     const lines = [
+
         "[ SYSTEM ] Restoring underground memories...",
         "[ SYSTEM ] Timeline corruption detected...",
         "[ SYSTEM ] Searching for entity...",
         "[ NØX ] ...Can you hear me?",
         "",
-        "[ ACCESS GRANTED ]"];
+        "[ ACCESS GRANTED ]"
+
+    ];
 
     let lineIndex = 0;
-    let charIndex = 0;
 
-    // container teks utama
-    const textLine = document.createElement("span");
-    bootText.appendChild(textLine);
+    function typeLine(){
 
-    // cursor 1 saja (nempel kanan)
-    const cursor = document.createElement("span");
-    cursor.className = "cursor";
-    cursor.textContent = "";
-    bootText.appendChild(cursor);
+        if(lineIndex >= lines.length){
 
-    function type(){
+            setTimeout(() => {
 
-        const currentLine = lines[lineIndex];
+                document.body.innerHTML += `
+<div class="cursor"></div>
+`;
 
-        // kalau pindah baris
-        if(charIndex >= currentLine.length){
-            textLine.innerHTML += "<br>";
-            lineIndex++;
-            charIndex = 0;
+            }, 1200);
 
-            // ⏱️ jeda lebih natural (biar tidak terlalu cepat)
-            setTimeout(type, 600);
             return;
         }
 
-        textLine.innerHTML += currentLine.charAt(charIndex);
-        charIndex++;
+        let text = lines[lineIndex];
 
-        // ⏱️ SLOWER + lebih smooth
-        setTimeout(type, 50);
+        let charIndex = 0;
+
+        let line =
+        document.createElement("div");
+
+        bootText.appendChild(line);
+
+        const interval =
+        setInterval(() => {
+
+            line.innerHTML +=
+            text.charAt(charIndex);
+
+            charIndex++;
+
+            if(charIndex >= text.length){
+
+                clearInterval(interval);
+
+                lineIndex++;
+
+                setTimeout(typeLine, 350);
+            }
+
+        }, 30);
     }
 
-    type();
-}   
-   
+    typeLine();
+}
+
 </script>
 
 </body>
