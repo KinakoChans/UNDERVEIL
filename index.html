@@ -706,7 +706,7 @@ function showChat(){
     typeChatBoot();
 }
 
-   function typeChatBoot(){
+function typeChatBoot(){
 
     const el = document.getElementById("chatBootText");
 
@@ -725,8 +725,14 @@ function showChat(){
 
     function type(){
 
+        // 💀 FIX: setelah semua line selesai → lanjut ke chat UI
         if(lineIndex >= lines.length){
-            return; // selesai
+
+            setTimeout(() => {
+                startChatUI();
+            }, 800);
+
+            return;
         }
 
         const text = lines[lineIndex];
@@ -754,7 +760,7 @@ function showChat(){
     }
 
     type();
-   }
+}
    
 </script>
 
