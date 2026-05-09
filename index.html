@@ -224,6 +224,50 @@ body::before{
 }
 
 /* =========================
+   BOOT SCREEN
+========================= */
+
+.boot-screen{
+
+    width:100%;
+    height:100vh;
+
+    background:black;
+
+    color:#b30000;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:40px;
+
+    font-size:11px;
+
+    line-height:2;
+
+    text-shadow:0 0 10px red;
+
+    animation:flickerBoot 0.15s infinite;
+}
+
+@keyframes flickerBoot{
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:0.94;
+    }
+
+    100%{
+        opacity:1;
+    }
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 
@@ -244,6 +288,10 @@ body::before{
     .enter-btn{
         font-size:8px;
         padding:12px 18px;
+    }
+
+    .boot-screen{
+        font-size:8px;
     }
 }
 
@@ -299,13 +347,108 @@ body::before{
 
 <script>
 
-document
-.getElementById("enterBtn")
-.addEventListener("click", () => {
+const enterBtn =
+document.getElementById("enterBtn");
 
-    alert("UNDERVEIL ENTERED");
+/* =========================
+   ENTER EVENT
+========================= */
+
+enterBtn.addEventListener("click", () => {
+
+    startTransition();
 
 });
+
+/* =========================
+   START TRANSITION
+========================= */
+
+function startTransition(){
+
+    document.body.innerHTML = `
+
+    <div class="boot-screen">
+
+        <div id="bootText">
+
+            [ SYSTEM ] Connection established...<br><br>
+
+        </div>
+
+    </div>
+
+    `;
+
+    typeBoot();
+}
+
+/* =========================
+   TYPEWRITER EFFECT
+========================= */
+
+function typeBoot(){
+
+    const bootText =
+    document.getElementById("bootText");
+
+    const lines = [
+
+        "[ SYSTEM ] Restoring underground memories...",
+        "[ SYSTEM ] Timeline corruption detected...",
+        "[ SYSTEM ] Searching for entity...",
+        "[ NØX ] ...Can you hear me?",
+        "",
+        "[ ACCESS GRANTED ]"
+
+    ];
+
+    let lineIndex = 0;
+
+    function typeLine(){
+
+        if(lineIndex >= lines.length){
+
+            setTimeout(() => {
+
+                alert("NEXT: CHAT PAGE");
+
+            }, 1200);
+
+            return;
+        }
+
+        let text = lines[lineIndex];
+
+        let charIndex = 0;
+
+        let line =
+        document.createElement("div");
+
+        bootText.appendChild(line);
+
+        const interval =
+        setInterval(() => {
+
+            line.innerHTML +=
+            text.charAt(charIndex);
+
+            charIndex++;
+
+            if(charIndex >= text.length){
+
+                clearInterval(interval);
+
+                lineIndex++;
+
+                setTimeout(typeLine, 350);
+            }
+
+        }, 30);
+    }
+
+    typeLine();
+}
 
 </script>
 
