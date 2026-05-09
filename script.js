@@ -7,34 +7,61 @@ let state = "boot";
 // INIT
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
-    const enterBtn = document.getElementById("enterBtn");
+    renderHome();
 
+    const enterBtn = document.getElementById("enterBtn");
     if (enterBtn) {
         enterBtn.addEventListener("click", startTransition);
     }
 });
 
 // =========================
-// START TRANSITION (BOOT SCREEN)
+// HOME SCREEN
 // =========================
-function startTransition() {
-    document.body.classList.add("glitch");
+function renderHome() {
+    const app = document.getElementById("app");
 
-    setTimeout(() => {
-        document.body.innerHTML = `
-        <div class="boot-screen">
-            <div id="bootText">
-                [ SYSTEM ] Connection established...<br><br>
-            </div>
+    app.innerHTML = `
+    <div class="container">
+
+        <div class="title">UNDERVEIL</div>
+
+        <div class="greeting">
+            > Connection established...<br><br>
+            > Welcome back, lost soul.
         </div>
-        `;
 
-        typeBoot();
-    }, 700);
+        <div class="desc">
+            UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline,
+            where every choice, memory, and word echoes through the underground.
+        </div>
+
+        <button class="enter-btn" id="enterBtn">ENTER</button>
+
+    </div>
+    `;
+
+    document.getElementById("enterBtn")
+        .addEventListener("click", startTransition);
 }
 
 // =========================
-// TYPEWRITER BOOT
+// BOOT TRANSITION
+// =========================
+function startTransition() {
+    const app = document.getElementById("app");
+
+    app.innerHTML = `
+    <div class="boot-screen">
+        <div id="bootText">[ SYSTEM ] Connection established...<br><br></div>
+    </div>
+    `;
+
+    typeBoot();
+}
+
+// =========================
+// TYPE BOOT
 // =========================
 function typeBoot() {
     const bootText = document.getElementById("bootText");
@@ -48,42 +75,41 @@ function typeBoot() {
         "[ ACCESS GRANTED ]"
     ];
 
-    let lineIndex = 0;
-    let charIndex = 0;
-    let currentLineEl = null;
+    let i = 0;
+    let c = 0;
+    let el;
 
     const cursor = document.createElement("span");
     cursor.className = "cursor";
     cursor.textContent = "█";
 
     function type() {
-        if (lineIndex >= lines.length) {
-            setTimeout(() => {
-                setState("login");
-            }, 800);
+        if (i >= lines.length) {
+            setTimeout(() => setState("login"), 800);
             return;
         }
 
-        const text = lines[lineIndex];
+        const text = lines[i];
 
-        if (charIndex === 0) {
-            currentLineEl = document.createElement("div");
-            bootText.appendChild(currentLineEl);
-            currentLineEl.appendChild(cursor);
+        if (c === 0) {
+            el = document.createElement("div");
+            bootText.appendChild(el);
+            el.appendChild(cursor);
         }
 
-        if (charIndex >= text.length) {
-            lineIndex++;
-            charIndex = 0;
+        if (c >= text.length) {
+            i++;
+            c = 0;
             setTimeout(type, 400);
             return;
         }
 
-        const charNode = document.createTextNode(text.charAt(charIndex));
-        currentLineEl.insertBefore(charNode, cursor);
+        el.insertBefore(
+            document.createTextNode(text[c]),
+            cursor
+        );
 
-        charIndex++;
-
+        c++;
         setTimeout(type, 35);
     }
 
@@ -91,28 +117,22 @@ function typeBoot() {
 }
 
 // =========================
-// STATE CONTROLLER
+// STATE CONTROL
 // =========================
 function setState(newState) {
     state = newState;
 
-    if (state === "login") {
-        showLogin();
-    }
-
-    if (state === "chat") {
-        showChat();
-    }
+    if (state === "login") showLogin();
+    if (state === "chat") showChat();
 }
 
 // =========================
 // LOGIN SCREEN
 // =========================
 function showLogin() {
-    document.body.classList.remove("glitch");
-    document.body.style.animation = "";
+    const app = document.getElementById("app");
 
-    document.body.innerHTML = `
+    app.innerHTML = `
     <div class="boot-screen">
 
         <div style="text-align:center">
@@ -121,19 +141,10 @@ function showLogin() {
                 [ SYSTEM ] AUTH REQUIRED
             </div>
 
-            <input id="username" placeholder="USERNAME"
-                class="input-field">
+            <input id="username" class="input-field" placeholder="USERNAME"><br><br>
+            <input id="password" class="input-field" type="password" placeholder="PASSWORD"><br><br>
 
-            <br><br>
-
-            <input id="password" type="password" placeholder="PASSWORD"
-                class="input-field">
-
-            <br><br>
-
-            <button onclick="handleLogin()" class="btn-login">
-                LOGIN
-            </button>
+            <button class="btn-login" onclick="handleLogin()">LOGIN</button>
 
             <div id="error" style="margin-top:15px;color:#ff0000;"></div>
 
@@ -153,87 +164,25 @@ function handleLogin() {
     if (u === "NOX" && p === "nox123") {
         setState("chat");
     } else {
-        showError("USERNAME / PASSWORD SALAH");
+        document.getElementById("error").textContent =
+            "USERNAME / PASSWORD SALAH";
     }
 }
 
 // =========================
-// ERROR EFFECT
-// =========================
-function showError(msg) {
-    document.getElementById("error").textContent = msg;
-
-    document.body.style.animation = "glitch 0.1s infinite";
-
-    setTimeout(() => {
-        document.body.style.animation = "";
-    }, 800);
-}
-
-// =========================
-// CHAT SCREEN (DARK PIXEL BASE)
+// CHAT SCREEN
 // =========================
 function showChat() {
-    document.body.innerHTML = `
-    <div class="boot-screen chat-screen">
+    const app = document.getElementById("app");
 
-        <div class="chat-box">
+    app.innerHTML = `
+    <div class="boot-screen">
 
-            <div class="chat-header">
-                NØX AI SYSTEM ONLINE
-            </div>
-
-            <div class="chat-messages" id="chatMessages">
-                <div class="msg bot">SYSTEM: Connection stable...</div>
-                <div class="msg bot">NØX: I'm watching the timeline break.</div>
-            </div>
-
-            <div class="chat-input">
-                <input id="chatInput" placeholder="TYPE MESSAGE...">
-                <button onclick="sendMessage()">SEND</button>
-            </div>
-
+        <div style="text-align:center">
+            [ NØX AI SYSTEM ONLINE ]<br><br>
+            CHAT MODE ACTIVATED...
         </div>
 
     </div>
     `;
-}
-
-// =========================
-// SEND MESSAGE
-// =========================
-function sendMessage() {
-    const input = document.getElementById("chatInput");
-    const messages = document.getElementById("chatMessages");
-
-    if (!input.value.trim()) return;
-
-    const userMsg = document.createElement("div");
-    userMsg.className = "msg user";
-    userMsg.textContent = "YOU: " + input.value;
-
-    messages.appendChild(userMsg);
-
-    const botMsg = document.createElement("div");
-    botMsg.className = "msg bot";
-    botMsg.textContent = "NØX: " + generateReply(input.value);
-
-    messages.appendChild(botMsg);
-
-    input.value = "";
-}
-
-// =========================
-// SIMPLE AI REPLY (TEMP)
-// =========================
-function generateReply(text) {
-    const replies = [
-        "The system is unstable...",
-        "I remember fragments of you.",
-        "This timeline is corrupted.",
-        "Don't trust what you see.",
-        "You're not alone here."
-    ];
-
-    return replies[Math.floor(Math.random() * replies.length)];
 }
