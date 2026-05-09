@@ -522,43 +522,42 @@ function typeBoot(){
     ];
 
     let lineIndex = 0;
+    let charIndex = 0;
 
-    // ✅ BUAT CURSOR SEKALI SAJA
+    // container teks utama (1 baris panjang)
+    const textLine = document.createElement("span");
+    bootText.appendChild(textLine);
+
+    // cursor 1 saja
     const cursor = document.createElement("span");
     cursor.className = "cursor";
     cursor.textContent = "█";
-
     bootText.appendChild(cursor);
 
-    function typeLine(){
+    function type(){
 
         if(lineIndex >= lines.length) return;
 
-        const lineText = lines[lineIndex];
-        const line = document.createElement("div");
+        const current = lines[lineIndex];
 
-        // taruh sebelum cursor
-        bootText.insertBefore(line, cursor);
+        // kalau pindah baris
+        if(charIndex >= current.length){
+            textLine.innerHTML += "<br>";
+            lineIndex++;
+            charIndex = 0;
+            setTimeout(type, 400);
+            return;
+        }
 
-        let charIndex = 0;
+        textLine.innerHTML += current.charAt(charIndex);
+        charIndex++;
 
-        const interval = setInterval(() => {
-
-            line.textContent += lineText.charAt(charIndex);
-            charIndex++;
-
-            if(charIndex >= lineText.length){
-                clearInterval(interval);
-                lineIndex++;
-                setTimeout(typeLine, 400);
-            }
-
-        }, 30);
+        setTimeout(type, 30);
     }
 
-    typeLine();
+    type();
 }
-
+   
 </script>
 
 </body>
