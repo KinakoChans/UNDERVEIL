@@ -404,23 +404,33 @@ enterBtn.addEventListener("click", () => {
 
 function startTransition(){
 
-    document.body.innerHTML = `
+    /* Activate glitch */
 
-    <div class="boot-screen">
+    document.body.classList.add("glitch");
 
-        <div id="bootText">
+    /* Delay before boot screen */
 
-            [ SYSTEM ] Connection established...<br><br>
+    setTimeout(() => {
+
+        document.body.innerHTML = `
+
+        <div class="boot-screen">
+
+            <div id="bootText">
+
+                [ SYSTEM ] Connection established...<br><br>
+
+            </div>
 
         </div>
 
-    </div>
+        `;
 
-    `;
+        typeBoot();
 
-    typeBoot();
-}
-
+    }, 700);
+   }
+   
 /* =========================
    TYPEWRITER EFFECT
 ========================= */
