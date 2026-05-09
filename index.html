@@ -524,39 +524,40 @@ function typeBoot(){
     let lineIndex = 0;
     let charIndex = 0;
 
-    // container teks utama (1 baris panjang)
+    // container teks utama
     const textLine = document.createElement("span");
     bootText.appendChild(textLine);
 
-    // cursor 1 saja
+    // cursor 1 saja (nempel kanan)
     const cursor = document.createElement("span");
     cursor.className = "cursor";
-    cursor.textContent = "█";
+    cursor.textContent = "";
     bootText.appendChild(cursor);
 
     function type(){
 
-        if(lineIndex >= lines.length) return;
-
-        const current = lines[lineIndex];
+        const currentLine = lines[lineIndex];
 
         // kalau pindah baris
-        if(charIndex >= current.length){
+        if(charIndex >= currentLine.length){
             textLine.innerHTML += "<br>";
             lineIndex++;
             charIndex = 0;
-            setTimeout(type, 350);
+
+            // ⏱️ jeda lebih natural (biar tidak terlalu cepat)
+            setTimeout(type, 600);
             return;
         }
 
-        textLine.innerHTML += current.charAt(charIndex);
+        textLine.innerHTML += currentLine.charAt(charIndex);
         charIndex++;
 
-        setTimeout(type, 30);
+        // ⏱️ SLOWER + lebih smooth
+        setTimeout(type, 50);
     }
 
     type();
-}
+}   
    
 </script>
 
