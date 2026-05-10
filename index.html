@@ -1509,6 +1509,59 @@ run().then(() => {
 });
 
    }  
+
+function sendMessage(){
+
+    const input =
+    document.getElementById("input");
+
+    const chat =
+    document.getElementById("chatMessages");
+
+    if(!input || !chat) return;
+
+    const text =
+    input.value.trim();
+
+    if(text === "") return;
+
+    // USER MESSAGE
+    const userMsg =
+    document.createElement("div");
+
+    userMsg.className =
+    "message user";
+
+    userMsg.textContent =
+    "[ YOU ] : " + text;
+
+    chat.appendChild(userMsg);
+
+    input.value = "";
+
+    // AUTO SCROLL
+    chat.scrollTop =
+    chat.scrollHeight;
+
+    // SIMPLE AI REPLY
+    setTimeout(() => {
+
+        const aiMsg =
+        document.createElement("div");
+
+        aiMsg.className =
+        "message ai";
+
+        aiMsg.textContent =
+        '[ NØX ] : signal received...';
+
+        chat.appendChild(aiMsg);
+
+        chat.scrollTop =
+        chat.scrollHeight;
+
+    }, 1500);
+       }
    
 </script>
 
