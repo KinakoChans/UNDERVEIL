@@ -638,6 +638,46 @@ body::before{
         opacity:0.5;
     }
        }
+
+/* SYSTEM CORRUPTED MESSAGE */
+.corrupted{
+    color:#ff2b2b;
+    text-shadow:
+    0 0 5px red,
+    0 0 10px darkred,
+    2px 0 #ff000055,
+    -2px 0 #ffffff22;
+
+    animation:corruptGlitch 0.08s infinite;
+}
+
+/* GLITCH SHAKE */
+@keyframes corruptGlitch{
+
+    0%{
+        transform:translate(0px);
+    }
+
+    20%{
+        transform:translate(-1px,1px);
+    }
+
+    40%{
+        transform:translate(1px,-1px);
+    }
+
+    60%{
+        transform:translate(-2px,0px);
+    }
+
+    80%{
+        transform:translate(2px,1px);
+    }
+
+    100%{
+        transform:translate(0px);
+    }
+}
    
 </style>
 </head>
@@ -940,58 +980,149 @@ function typeChatBoot(){
 
     const el = document.getElementById("chatBootText");
 
-    const lines = [
-        "[ NØX AI SYSTEM ONLINE ]",
-        "CHAT MODE ACTIVATED..."
-    ];
-
-    let lineIndex = 0;
-    let charIndex = 0;
-    let currentLine = null;
-
     const cursor = document.createElement("span");
     cursor.className = "cursor";
     cursor.textContent = "█";
 
-    function type(){
+    // =========================
+    // TYPEWRITER FUNCTION
+    // =========================
+    function typeLine(text, className = "", speed = 120){
 
-        // 💀 FIX: setelah semua line selesai → lanjut ke chat UI
-        if(lineIndex >= lines.length){
+        return new Promise((resolve) => {
 
-            setTimeout(() => {
-                startChatUI();
-            }, 800);
+            const line = document.createElement("div");
 
-            return;
-        }
+            if(className){
+                line.className = className;
+            }
 
-        const text = lines[lineIndex];
+            el.appendChild(line);
+            line.appendChild(cursor);
 
-        // bikin baris baru
-        if(charIndex === 0){
-            currentLine = document.createElement("div");
-            el.appendChild(currentLine);
-            currentLine.appendChild(cursor);
-        }
+            let i = 0;
 
-        // selesai 1 line
-        if(charIndex >= text.length){
-            lineIndex++;
-            charIndex = 0;
-            setTimeout(type, 400);
-            return;
-        }
+            function typing(){
 
-        const node = document.createTextNode(text.charAt(charIndex));
-        currentLine.insertBefore(node, cursor);
+                if(i >= text.length){
 
-        charIndex++;
-        setTimeout(type, 40);
+                    resolve();
+                    return;
+                }
+
+                const node =
+                document.createTextNode(text.charAt(i));
+
+                line.insertBefore(node, cursor);
+
+                i++;
+
+                setTimeout(typing, speed);
+            }
+
+            typing();
+        });
     }
 
-    type();
-}
+    // =========================
+    // LOADING DOTS
+    // =========================
+    function loadingLoop(baseText, loops = 3){
 
+        return new Promise((resolve) => {
+
+            const line = document.createElement("div");
+
+            line.className = "glow";
+
+            el.appendChild(line);
+
+            let count = 0;
+
+            function animate(){
+
+                if(count >= loops * 4){
+
+                    resolve();
+                    return;
+                }
+
+                const dots = ".".repeat(count % 4);
+
+                line.textContent =
+                "> " + baseText + dots;
+
+                count++;
+
+                setTimeout(animate, 600);
+            }
+
+            animate();
+        });
+    }
+
+    // =========================
+    // SHAKE GLITCH
+    // =========================
+    function screenGlitch(){
+
+        document.body.classList.add("glitch");
+
+        setTimeout(() => {
+            document.body.classList.remove("glitch");
+        }, 1200);
+    }
+
+    // =========================
+    // SEQUENCE
+    // =========================
+    async function runBoot(){
+
+        // slow loading
+        await loadingLoop("SIGNAL RESTORED", 3);
+
+        await typeLine(
+            '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
+            "glow",
+            85
+        );
+
+        await new Promise(r => setTimeout(r, 1500));
+
+        // NØX messages
+        await typeLine(
+            '[ NØX ] : ...you finally returned.',
+            "glow",
+            110
+        );
+
+        await new Promise(r => setTimeout(r, 2000));
+
+        await typeLine(
+            '[ NØX ] : this timeline is unstable.',
+            "glow",
+            110
+        );
+
+        await new Promise(r => setTimeout(r, 2500));
+
+        // corrupted line
+        await loadingLoop(
+            '[ SYSTEM ] : corrupted memories detected',
+            2
+        );
+
+        // BIG GLITCH SHAKE
+        screenGlitch();
+
+        await new Promise(r => setTimeout(r, 1800));
+
+        startChatUI();
+    }
+
+    runBoot();
+               }
+   
 function startChatUI(){
 
     document.body.innerHTML = `
