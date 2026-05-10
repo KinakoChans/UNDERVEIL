@@ -998,45 +998,13 @@ function startChatUI(){
 
     <div class="chat-container">
 
-        <!-- HEADER -->
-
         <div class="chat-header">
-
             <span class="glow">
                 UNDERVEIL // TIMELINE_01
             </span>
-
         </div>
 
-        <!-- SYSTEM LORE -->
-
-        <div class="chat-subheader">
-
-            > SIGNAL RESTORED...<br>
-            > MEMORY FRAGMENTS DETECTED...<br>
-            > ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK
-
-        </div>
-
-        <!-- CHAT AREA -->
-
-        <div class="chat-box" id="chatBox">
-
-            <div class="message ai">
-                [ NØX ] : ...you finally returned.
-            </div>
-
-            <div class="message ai">
-                [ NØX ] : this timeline is unstable.
-            </div>
-
-            <div class="message ai">
-                [ SYSTEM ] : corrupted memories detected...
-            </div>
-
-        </div>
-
-        <!-- INPUT -->
+        <div class="chat-box" id="chatBox"></div>
 
         <div class="chat-input-area">
 
@@ -1045,11 +1013,12 @@ function startChatUI(){
                 class="terminal-input"
                 placeholder="ENTER MESSAGE..."
                 autocomplete="off"
+                disabled
             />
 
             <button
-                onclick="sendMessage()"
-                class="terminal-btn">
+                class="terminal-btn"
+                disabled>
 
                 TRANSMIT
 
@@ -1060,9 +1029,123 @@ function startChatUI(){
     </div>
 
     `;
+
+    startUnderveilBoot();
+}
+
+function startUnderveilBoot(){
+
+    const chatBox =
+    document.getElementById("chatBox");
+
+    const lines = [
+
+        "> SIGNAL RESTORED...",
+        "> MEMORY FRAGMENTS DETECTED...",
+        '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
+
+        "",
+
+        "[ NØX ] : ...you finally returned.",
+        "[ NØX ] : this timeline is unstable.",
+        "[ SYSTEM ] : corrupted memories detected..."
+
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    let currentLine = null;
+
+    const cursor =
+    document.createElement("span");
+
+    cursor.className = "cursor";
+    cursor.textContent = "█";
+
+    function type(){
+
+        // selesai semua
+        if(lineIndex >= lines.length){
+
+            // aktifkan input setelah boot selesai
+            setTimeout(() => {
+
+                document.getElementById("input")
+                .disabled = false;
+
+                document.querySelector(".terminal-btn")
+                .disabled = false;
+
+            }, 1200);
+
+            return;
+        }
+
+        const text = lines[lineIndex];
+
+        // bikin line baru
+        if(charIndex === 0){
+
+            currentLine =
+            document.createElement("div");
+
+            currentLine.className =
+            "message ai";
+
+            chatBox.appendChild(currentLine);
+
+            currentLine.appendChild(cursor);
+
+            // auto scroll bawah
+            chatBox.scrollTop =
+            chatBox.scrollHeight;
+        }
+
+        // line selesai
+        if(charIndex >= text.length){
+
+            lineIndex++;
+            charIndex = 0;
+
+            // delay cinematic
+            let delay = 500;
+
+            // jeda khusus sebelum NØX muncul
+            if(lineIndex === 4){
+                delay = 1800;
+            }
+
+            // jeda akhir
+            if(lineIndex === lines.length){
+                delay = 2200;
+            }
+
+            setTimeout(type, delay);
+
+            return;
+        }
+
+        // ketik karakter
+        const node =
+        document.createTextNode(
+            text.charAt(charIndex)
+        );
+
+        currentLine.insertBefore(node, cursor);
+
+        charIndex++;
+
+        chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+        setTimeout(type, 35);
+    }
+
+    type();
 }
    
-</script>
+   </script>
 
 </body>
 </html>
