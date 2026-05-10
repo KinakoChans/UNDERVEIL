@@ -995,31 +995,72 @@ function typeChatBoot(){
 function startChatUI(){
 
     document.body.innerHTML = `
+
     <div class="chat-container">
 
+        <!-- HEADER -->
+
         <div class="chat-header">
-            <span class="glow">UNDERVEIL // NØX TERMINAL</span>
+
+            <span class="glow">
+                UNDERVEIL // TIMELINE_01
+            </span>
+
         </div>
+
+        <!-- SYSTEM LORE -->
 
         <div class="chat-subheader">
-            UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline, where every choice, memory, and word echoes through the underground.
+
+            > SIGNAL RESTORED...<br>
+            > MEMORY FRAGMENTS DETECTED...<br>
+            > ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK
+
         </div>
 
-        <div class="chat-box" id="chatBox"></div>
+        <!-- CHAT AREA -->
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="message ai">
+                [ NØX ] : ...you finally returned.
+            </div>
+
+            <div class="message ai">
+                [ NØX ] : this timeline is unstable.
+            </div>
+
+            <div class="message ai">
+                [ SYSTEM ] : corrupted memories detected...
+            </div>
+
+        </div>
+
+        <!-- INPUT -->
 
         <div class="chat-input-area">
 
-            <input id="input" placeholder="TYPE MESSAGE..." class="terminal-input"/>
+            <input
+                id="input"
+                class="terminal-input"
+                placeholder="ENTER MESSAGE..."
+                autocomplete="off"
+            />
 
-            <button onclick="sendMessage()" class="terminal-btn">
-                SEND
+            <button
+                onclick="sendMessage()"
+                class="terminal-btn">
+
+                TRANSMIT
+
             </button>
 
         </div>
 
     </div>
+
     `;
-  }
+}
    
 </script>
 
