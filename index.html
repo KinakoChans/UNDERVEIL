@@ -1038,112 +1038,184 @@ function startUnderveilBoot(){
     const chatBox =
     document.getElementById("chatBox");
 
-    const lines = [
+    // =========================
+    // BOOT STATUS BAR
+    // =========================
+
+    const bootBar =
+    document.createElement("div");
+
+    bootBar.className =
+    "chat-subheader";
+
+    chatBox.appendChild(bootBar);
+
+    // =========================
+    // BOOT LINES
+    // =========================
+
+    const bootLines = [
 
         "> SIGNAL RESTORED...",
         "> MEMORY FRAGMENTS DETECTED...",
-        '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
+        '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK'
 
-        "",
+    ];
+
+    // =========================
+    // CHAT LINES
+    // =========================
+
+    const chatLines = [
 
         "[ NØX ] : ...you finally returned.",
         "[ NØX ] : this timeline is unstable.",
+
         "[ SYSTEM ] : corrupted memories detected..."
 
     ];
 
-    let lineIndex = 0;
-    let charIndex = 0;
+    let bootIndex = 0;
 
-    let currentLine = null;
+    // =========================
+    // TYPE BOOT
+    // =========================
 
-    const cursor =
-    document.createElement("span");
+    function typeBootLine(){
 
-    cursor.className = "cursor";
-    cursor.textContent = "█";
+        if(bootIndex >= bootLines.length){
 
-    function type(){
-
-        // selesai semua
-        if(lineIndex >= lines.length){
-
-            // aktifkan input setelah boot selesai
+            // jeda sebelum NØX muncul
             setTimeout(() => {
 
-                document.getElementById("input")
-                .disabled = false;
+                startEntityChat();
 
-                document.querySelector(".terminal-btn")
-                .disabled = false;
-
-            }, 1200);
+            }, 1800);
 
             return;
         }
 
-        const text = lines[lineIndex];
+        const line =
+        document.createElement("div");
 
-        // bikin line baru
-        if(charIndex === 0){
+        line.textContent =
+        bootLines[bootIndex];
 
-            currentLine =
-            document.createElement("div");
+        bootBar.appendChild(line);
 
-            currentLine.className =
-            "message ai";
+        bootIndex++;
 
-            chatBox.appendChild(currentLine);
+        // line ketiga lebih lama
+        let delay = 700;
 
-            currentLine.appendChild(cursor);
-
-            // auto scroll bawah
-            chatBox.scrollTop =
-            chatBox.scrollHeight;
+        if(bootIndex === 3){
+            delay = 1800;
         }
 
-        // line selesai
-        if(charIndex >= text.length){
-
-            lineIndex++;
-            charIndex = 0;
-
-            // delay cinematic
-            let delay = 500;
-
-            // jeda khusus sebelum NØX muncul
-            if(lineIndex === 4){
-                delay = 1800;
-            }
-
-            // jeda akhir
-            if(lineIndex === lines.length){
-                delay = 2200;
-            }
-
-            setTimeout(type, delay);
-
-            return;
-        }
-
-        // ketik karakter
-        const node =
-        document.createTextNode(
-            text.charAt(charIndex)
-        );
-
-        currentLine.insertBefore(node, cursor);
-
-        charIndex++;
-
-        chatBox.scrollTop =
-        chatBox.scrollHeight;
-
-        setTimeout(type, 35);
+        setTimeout(typeBootLine, delay);
     }
 
-    type();
-}
+    // =========================
+    // ENTITY CHAT
+    // =========================
+
+    function startEntityChat(){
+
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        let currentLine = null;
+
+        const cursor =
+        document.createElement("span");
+
+        cursor.className = "cursor";
+
+        cursor.textContent = "█";
+
+        cursor.style.background = "white";
+
+        function type(){
+
+            // selesai semua
+            if(lineIndex >= chatLines.length){
+
+                setTimeout(() => {
+
+                    document.getElementById("input")
+                    .disabled = false;
+
+                    document.querySelector(".terminal-btn")
+                    .disabled = false;
+
+                }, 1500);
+
+                return;
+            }
+
+            const text =
+            chatLines[lineIndex];
+
+            // bikin line baru
+            if(charIndex === 0){
+
+                currentLine =
+                document.createElement("div");
+
+                currentLine.className =
+                "message ai";
+
+                chatBox.appendChild(currentLine);
+
+                currentLine.appendChild(cursor);
+
+                chatBox.scrollTop =
+                chatBox.scrollHeight;
+            }
+
+            // selesai 1 line
+            if(charIndex >= text.length){
+
+                lineIndex++;
+                charIndex = 0;
+
+                // jeda antar pesan
+                let delay = 1200;
+
+                if(lineIndex === 2){
+                    delay = 2000;
+                }
+
+                if(lineIndex === 3){
+                    delay = 2500;
+                }
+
+                setTimeout(type, delay);
+
+                return;
+            }
+
+            const node =
+            document.createTextNode(
+                text.charAt(charIndex)
+            );
+
+            currentLine.insertBefore(node, cursor);
+
+            charIndex++;
+
+            chatBox.scrollTop =
+            chatBox.scrollHeight;
+
+            setTimeout(type, 35);
+        }
+
+        type();
+    }
+
+    // mulai boot
+    typeBootLine();
+   }
    
    </script>
 
