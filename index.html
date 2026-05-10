@@ -305,6 +305,54 @@ body::before{
     }
 }
 
+@keyframes timelineFlicker{
+
+    0%{
+        opacity:1;
+        transform:translateX(0px);
+    }
+
+    10%{
+        opacity:0.7;
+    }
+
+    20%{
+        opacity:1;
+        transform:translateX(-1px);
+    }
+
+    30%{
+        opacity:0.4;
+    }
+
+    40%{
+        opacity:1;
+        transform:translateX(1px);
+    }
+
+    50%{
+        opacity:0.8;
+    }
+
+    60%{
+        opacity:1;
+    }
+
+    70%{
+        opacity:0.5;
+    }
+
+    80%{
+        opacity:1;
+        transform:translateX(-1px);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateX(0px);
+    }
+}
+   
 /* =========================
    TERMINAL CURSOR
 ========================= */
@@ -450,11 +498,23 @@ body::before{
 /* HEADER */
 .chat-header{
     padding:12px;
-    border-bottom:1px solid #ff2b2b;
-    text-shadow:0 0 10px red;
-    font-size:12px;
-}
 
+    border-bottom:1px solid rgba(255,255,255,0.2);
+
+    color:white;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    text-shadow:
+    0 0 5px white,
+    0 0 10px rgba(255,255,255,0.8),
+    0 0 20px rgba(255,255,255,0.3);
+
+    animation:timelineFlicker 0.12s infinite;
+}
+   
 /* SUB TEXT LORE */
 .chat-subheader{
     padding:10px;
