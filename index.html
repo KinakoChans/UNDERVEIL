@@ -1120,11 +1120,7 @@ function startChatUI(){
             <span class="glow">UNDERVEIL // TIMELINE_01</span>
         </div>
 
-        <div class="chat-subheader">
-    > SIGNAL RESTORED...<br>
-    > MEMORY FRAGMENTS DETECTED...<br>
-    > ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK...
-</div>
+        <div class="chat-subheader" id="bootSequence"></div>
 
         <div class="chat-box" id="chatBox"></div>
 
@@ -1140,7 +1136,137 @@ function startChatUI(){
 
     </div>
     `;
+   
+   startHeaderBoot();
   }
+
+function startHeaderBoot(){
+
+    const el =
+    document.getElementById("bootSequence");
+
+    // =========================
+    // TYPEWRITER
+    // =========================
+
+    function typeLine(text, speed = 70){
+
+        return new Promise((resolve) => {
+
+            const line =
+            document.createElement("div");
+
+            line.className = "glow";
+
+            el.appendChild(line);
+
+            let i = 0;
+
+            function typing(){
+
+                if(i >= text.length){
+
+                    resolve();
+                    return;
+                }
+
+                line.textContent +=
+                text.charAt(i);
+
+                i++;
+
+                setTimeout(
+                    typing,
+                    speed
+                );
+            }
+
+            typing();
+        });
+    }
+
+    // =========================
+    // DOT ANIMATION
+    // =========================
+
+    function loadingDots(baseText, loops = 4){
+
+        return new Promise((resolve) => {
+
+            const line =
+            document.createElement("div");
+
+            line.className = "glow";
+
+            el.appendChild(line);
+
+            let count = 0;
+
+            function animate(){
+
+                const dots =
+                ".".repeat(count % 4);
+
+                line.textContent =
+                "> " + baseText + dots;
+
+                count++;
+
+                if(count > loops * 4){
+
+                    resolve();
+                    return;
+                }
+
+                setTimeout(
+                    animate,
+                    500
+                );
+            }
+
+            animate();
+        });
+    }
+
+    // =========================
+    // SEQUENCE
+    // =========================
+
+    async function run(){
+
+        // SIGNAL
+        await loadingDots(
+            "SIGNAL RESTORED",
+            5
+        );
+
+        await new Promise(r =>
+            setTimeout(r, 1800)
+        );
+
+        // MEMORY
+        await loadingDots(
+            "MEMORY FRAGMENTS DETECTED",
+            5
+        );
+
+        await new Promise(r =>
+            setTimeout(r, 2200)
+        );
+
+        // ENTITY
+        await loadingDots(
+            'ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
+            6
+        );
+
+        await new Promise(r =>
+            setTimeout(r, 1200)
+        );
+    }
+
+    run();
+   }
   
 </script>
 
