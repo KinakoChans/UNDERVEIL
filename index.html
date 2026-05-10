@@ -374,22 +374,24 @@ body::before{
 ========================= */
 
 .terminal-input{
-    background:black;
+    background:#000;
     color:#ff2b2b;
     border:1px solid #ff2b2b;
-    padding:10px;
+    padding:12px;
     font-family:'Press Start 2P', monospace;
     font-size:10px;
     outline:none;
-    width:220px;
+    width:260px;
     text-transform:uppercase;
-    box-shadow:0 0 8px rgba(255,0,0,0.3);
+    box-shadow:0 0 10px rgba(255,0,0,0.25);
+    transition:0.2s;
 }
 
 .terminal-input:focus{
-    box-shadow:0 0 15px rgba(255,0,0,0.6);
+    box-shadow:0 0 18px rgba(255,0,0,0.7);
+    border-color:#ff5555;
 }
-
+   
 .terminal-btn{
     margin-top:10px;
     padding:10px 18px;
@@ -410,14 +412,14 @@ body::before{
 }
 
 /* =========================
-   UNDERVEIL CHAT UI
+   CHAT DARK PIXEL UI
 ========================= */
 
 .chat-container{
     width:100%;
     height:100vh;
-    background:#050505;
-    color:#d8d8d8;
+    background:black;
+    color:#ff2b2b;
     font-family:'Press Start 2P', cursive;
     display:flex;
     flex-direction:column;
@@ -425,258 +427,101 @@ body::before{
     overflow:hidden;
 }
 
-/* =========================
-   CORRUPTED NOISE
-========================= */
-
+/* glitch noise overlay vibe */
 .chat-container::before{
     content:"";
     position:absolute;
     width:100%;
     height:100%;
     background:url("https://i.imgur.com/8QfQ5QY.png");
-    opacity:0.03;
+    opacity:0.04;
     pointer-events:none;
-    animation:noiseMove 0.15s infinite;
+    animation:noiseMove 0.2s infinite;
 }
 
-/* =========================
-   SCREEN FLICKER
-========================= */
-
-.chat-container::after{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-   
-    background:
-    repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.02),
-        rgba(255,255,255,0.02) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-
-    mix-blend-mode:overlay;
-    pointer-events:none;
+@keyframes noiseMove {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(-1px,1px); }
+    50% { transform: translate(1px,-1px); }
+    75% { transform: translate(-1px,-1px); }
+    100% { transform: translate(0,0); }
 }
 
-/* =========================
-   NOISE ANIMATION
-========================= */
-
-@keyframes noiseMove{
-
-    0%{
-        transform:translate(0,0);
-    }
-
-    25%{
-        transform:translate(-1px,1px);
-    }
-
-    50%{
-        transform:translate(1px,-1px);
-    }
-
-    75%{
-        transform:translate(-1px,-1px);
-    }
-
-    100%{
-        transform:translate(0,0);
-    }
-}
-
-/* =========================
-   HEADER
-========================= */
-
+/* HEADER */
 .chat-header{
-    padding:16px;
-    border-bottom:1px solid rgba(255,255,255,0.08);
-    font-size:11px;
-    letter-spacing:2px;
-    color:white;
-    text-shadow:
-    0 0 5px rgba(255,255,255,0.3);
-    animation:flicker 3s infinite;
-    z-index:2;
+    padding:12px;
+    border-bottom:1px solid #ff2b2b;
+    text-shadow:0 0 10px red;
+    font-size:12px;
 }
 
-/* =========================
-   LORE TEXT
-========================= */
-
+/* SUB TEXT LORE */
 .chat-subheader{
-    padding:14px;
+    padding:10px;
     font-size:8px;
-    line-height:1.8;
-    color:#7a7a7a;
-    border-bottom:1px solid rgba(255,255,255,0.05);
-    z-index:2;
+    color:#aa0000;
+    opacity:0.8;
+    line-height:1.5;
+    border-bottom:1px solid rgba(255,0,0,0.3);
 }
 
-/* =========================
-   CHAT AREA
-========================= */
-
+/* CHAT BOX */
 .chat-box{
     flex:1;
-    padding:18px;
+    padding:10px;
     overflow-y:auto;
     font-size:10px;
-    line-height:2;
-    z-index:2;
+    line-height:1.8;
 }
 
-/* =========================
-   MESSAGE STYLE
-========================= */
-
-.message{
-    margin-bottom:18px;
-    animation:messageFade 0.3s ease;
-}
-
-.ai{
-    color:#dcdcdc;
-    text-shadow:
-    0 0 5px rgba(255,255,255,0.08);
-}
-
-.user{
-    color:#8f8f8f;
-    text-align:right;
-}
-
-/* =========================
-   MESSAGE FADE
-========================= */
-
-@keyframes messageFade{
-
-    from{
-        opacity:0;
-        transform:translateY(5px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0px);
-    }
-}
-
-/* =========================
-   INPUT AREA
-========================= */
-
+/* INPUT AREA */
 .chat-input-area{
     display:flex;
-    border-top:1px solid rgba(255,255,255,0.08);
-    z-index:2;
+    border-top:1px solid #ff2b2b;
 }
 
-/* =========================
-   INPUT
-========================= */
-
+/* INPUT STYLE */
 .terminal-input{
     flex:1;
-    background:#0a0a0a;
+    background:black;
     border:none;
-    color:#dcdcdc;
-    padding:16px;
+    color:#ff2b2b;
+    padding:12px;
     font-family:'Press Start 2P';
     font-size:9px;
     outline:none;
     text-transform:uppercase;
 }
 
-/* =========================
-   SEND BUTTON
-========================= */
-
+/* BUTTON STYLE */
 .terminal-btn{
-    width:110px;
-    background:#111;
-    color:#dcdcdc;
-    border:none;
-    border-left:1px solid rgba(255,255,255,0.08);
+    background:black;
+    color:#ff2b2b;
+    border-left:1px solid #ff2b2b;
+    padding:12px;
     font-family:'Press Start 2P';
     font-size:9px;
     cursor:pointer;
-    transition:0.2s;
 }
 
 .terminal-btn:hover{
-    background:white;
+    background:#ff2b2b;
     color:black;
+    box-shadow:0 0 15px red;
 }
 
-/* =========================
-   GLOW TEXT
-========================= */
-
+/* GLITCH TEXT */
 .glow{
-    animation:flicker 2s infinite;
+    text-shadow:0 0 10px red, 0 0 20px darkred;
 }
 
-/* =========================
-   FLICKER
-========================= */
-
-@keyframes flicker{
-
-    0%,18%,22%,25%,53%,57%,100%{
-        opacity:1;
-    }
-
-    20%,24%,55%{
-        opacity:0.5;
-    }
-       }
-
-/* SYSTEM CORRUPTED MESSAGE */
-.corrupted{
-    color:#ff2b2b;
-    text-shadow:
-    0 0 5px red,
-    0 0 10px darkred,
-    2px 0 #ff000055,
-    -2px 0 #ffffff22;
-
-    animation:corruptGlitch 0.08s infinite;
-}
-
-/* GLITCH SHAKE */
-@keyframes corruptGlitch{
-
-    0%{
-        transform:translate(0px);
-    }
-
-    20%{
-        transform:translate(-1px,1px);
-    }
-
-    40%{
-        transform:translate(1px,-1px);
-    }
-
-    60%{
-        transform:translate(-2px,0px);
-    }
-
-    80%{
-        transform:translate(2px,1px);
-    }
-
-    100%{
-        transform:translate(0px);
-    }
+.login-box{
+    text-align:center;
+    padding:20px;
+    border:1px solid rgba(255,0,0,0.3);
+    box-shadow:0 0 25px rgba(255,0,0,0.15);
+    background:rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
 }
    
 </style>
@@ -1030,403 +875,39 @@ function typeChatBoot(){
     }
 
     type();
-   }
-   
+}
+
 function startChatUI(){
 
     document.body.innerHTML = `
-
     <div class="chat-container">
 
         <div class="chat-header">
-            <span class="glow">
-                UNDERVEIL // TIMELINE_01
-            </span>
+            <span class="glow">UNDERVEIL // NØX TERMINAL</span>
+        </div>
+
+        <div class="chat-subheader">
+            UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline, where every choice, memory, and word echoes through the underground.
         </div>
 
         <div class="chat-box" id="chatBox"></div>
 
         <div class="chat-input-area">
 
-            <input
-                id="input"
-                class="terminal-input"
-                placeholder="ENTER MESSAGE..."
-                autocomplete="off"
-                disabled
-            />
+            <input id="input" placeholder="TYPE MESSAGE..." class="terminal-input"/>
 
-            <button
-                class="terminal-btn"
-                disabled>
-
-                TRANSMIT
-
+            <button onclick="sendMessage()" class="terminal-btn">
+                SEND
             </button>
 
         </div>
 
     </div>
-
     `;
-
-    startUnderveilBoot();
-}
-
-function startUnderveilBoot(){
-
-    const chatBox =
-    document.getElementById("chatBox");
-
-    // =========================
-    // BOOT BAR
-    // =========================
-
-    const bootBar =
-    document.createElement("div");
-
-    bootBar.className =
-    "chat-subheader";
-
-    chatBox.appendChild(bootBar);
-
-    // =========================
-    // CREATE LINE
-    // =========================
-
-    function createBootLine(text, callback){
-
-    const line =
-    document.createElement("div");
-
-    line.style.marginBottom = "10px";
-
-    bootBar.appendChild(line);
-
-    animateBootText(line, text, callback);
-    }
-
-    // =========================
-    // LOADING DOTS ANIMATION
-    // =========================
-
-   function animateBootText(el, text, callback){
-
-    let i = 0;
-
-    // =========================
-    // TYPEWRITER
-    // =========================
-
-    function type(){
-
-        if(i >= text.length){
-
-            // selesai ketik
-            setTimeout(() => {
-
-                startDots();
-
-            }, 700);
-
-            return;
-        }
-
-        el.textContent += text.charAt(i);
-
-        i++;
-
-        // SUPER LAMBAT
-        setTimeout(type, 85);
-    }
-
-    // =========================
-    // DOT LOOP
-    // =========================
-
-    function startDots(){
-
-        let dots = 0;
-        let loops = 0;
-
-        function animate(){
-
-            // RESET TOTAL
-            if(dots > 3){
-
-                dots = 0;
-
-                loops++;
-            }
-
-            el.textContent =
-            text + ".".repeat(dots);
-
-            dots++;
-
-            // selesai loop
-            if(loops >= 4){
-
-                if(callback){
-                    callback();
-                }
-
-                return;
-            }
-
-            setTimeout(animate, 500);
-        }
-
-        animate();
-    }
-
-    type();
-   }
-   
-    // =========================
-    // START BOOT
-    // =========================
-
-    createBootLine("> SIGNAL RESTORED", () => {
-
-    createBootLine("> MEMORY FRAGMENTS DETECTED", () => {
-
-        createBootLine(
-            '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
-            () => {
-
-                setTimeout(() => {
-
-                    startEntityChat();
-
-                }, 3000);
-
-            }
-        );
-
-    });
-
-});
-
-    // =========================
-    // ENTITY CHAT
-    // =========================
-
-    function startEntityChat(){
-
-        const lines = [
-
-            "[ NØX ] : ...you finally returned.",
-
-            "[ NØX ] : this timeline is unstable.",
-
-            "[ SYSTEM ] : corrupted memories detected..."
-
-        ];
-
-        let lineIndex = 0;
-
-        function nextLine(){
-
-            if(lineIndex >= lines.length){
-
-                // aktifkan input
-
-// =========================
-// START BOOT
-// =========================
-
-createBootLine("> SIGNAL RESTORED", () => {
-
-    createBootLine("> MEMORY FRAGMENTS DETECTED", () => {
-
-        createBootLine(
-            '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
-            () => {
-
-                // jeda sebelum entity muncul
-                setTimeout(() => {
-
-                    startEntityChat();
-
-                }, 3500);
-
-            }
-        );
-
-    });
-
-});
-}
-
-// =========================
-// ENTITY CHAT SEQUENCE
-// =========================
-
-function startEntityChat(){
-
-    const chatBox =
-    document.getElementById("chatBox");
-
-    // =========================
-    // CREATE MESSAGE
-    // =========================
-
-    function createMessage(text, className = "ai"){
-
-        return new Promise((resolve) => {
-
-            const msg =
-            document.createElement("div");
-
-            msg.className =
-            "message " + className;
-
-            chatBox.appendChild(msg);
-
-            let i = 0;
-
-            // cursor putih
-            const cursor =
-            document.createElement("span");
-
-            cursor.className = "cursor";
-
-            cursor.style.background = "white";
-
-            cursor.textContent = "█";
-
-            msg.appendChild(cursor);
-
-            function typing(){
-
-                if(i >= text.length){
-
-                    resolve();
-                    return;
-                }
-
-                const node =
-                document.createTextNode(
-                    text.charAt(i)
-                );
-
-                msg.insertBefore(node, cursor);
-
-                i++;
-
-                // SUPER LAMBAT
-                setTimeout(typing, 90);
-            }
-
-            typing();
-        });
-    }
-
-    // =========================
-    // DOT LOADING
-    // =========================
-
-    function corruptedLoading(){
-
-        return new Promise((resolve) => {
-
-            const msg =
-            document.createElement("div");
-
-            msg.className =
-            "message corrupted";
-
-            chatBox.appendChild(msg);
-
-            let dots = 0;
-            let loops = 0;
-
-            function animate(){
-
-                if(dots > 3){
-
-                    dots = 0;
-                    loops++;
-                }
-
-                msg.textContent =
-                "[ SYSTEM ] : corrupted memories detected" +
-                ".".repeat(dots);
-
-                dots++;
-
-                // selesai
-                if(loops >= 4){
-
-                    screenGlitch();
-
-                    resolve();
-                    return;
-                }
-
-                setTimeout(animate, 550);
-            }
-
-            animate();
-        });
-    }
-
-    // =========================
-    // BIG GLITCH EFFECT
-    // =========================
-
-    function screenGlitch(){
-
-        document.body.classList.add("glitch");
-
-        setTimeout(() => {
-
-            document.body.classList.remove("glitch");
-
-        }, 1800);
-    }
-
-    // =========================
-    // RUN SEQUENCE
-    // =========================
-
-    async function run(){
-
-        await createMessage(
-            "[ NØX ] : ...you finally returned."
-        );
-
-        await new Promise(r =>
-            setTimeout(r, 2400)
-        );
-
-        await createMessage(
-            "[ NØX ] : this timeline is unstable."
-        );
-
-        await new Promise(r =>
-            setTimeout(r, 3000)
-        );
-
-        await corruptedLoading();
-
-        await new Promise(r =>
-            setTimeout(r, 2500)
-        );
-
-        // aktifkan input
-        document.getElementById("input")
-        .disabled = false;
-
-        document.querySelector(".terminal-btn")
-        .disabled = false;
-    }
-
-    run();
-   }
-               
-   </script>
+  }
+  
+</script>
 
 </body>
-</html>
+  </html>
+  
