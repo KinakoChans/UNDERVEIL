@@ -305,51 +305,46 @@ body::before{
     }
 }
 
-@keyframes timelineFlicker{
+@keyframes headerFlicker{
 
     0%{
         opacity:1;
-        transform:translateX(0px);
     }
 
-    10%{
-        opacity:0.7;
+    18%{
+        opacity:1;
     }
 
     20%{
-        opacity:1;
-        transform:translateX(-1px);
-    }
-
-    30%{
         opacity:0.4;
     }
 
-    40%{
+    22%{
         opacity:1;
-        transform:translateX(1px);
+    }
+
+    24%{
+        opacity:0.2;
+    }
+
+    26%{
+        opacity:1;
     }
 
     50%{
-        opacity:0.8;
+        opacity:0.9;
     }
 
-    60%{
+    53%{
+        opacity:0.3;
+    }
+
+    57%{
         opacity:1;
-    }
-
-    70%{
-        opacity:0.5;
-    }
-
-    80%{
-        opacity:1;
-        transform:translateX(-1px);
     }
 
     100%{
         opacity:1;
-        transform:translateX(0px);
     }
 }
    
@@ -497,6 +492,7 @@ body::before{
 
 /* HEADER */
 .chat-header{
+
     padding:12px;
 
     border-bottom:1px solid rgba(255,255,255,0.2);
@@ -508,11 +504,11 @@ body::before{
     letter-spacing:2px;
 
     text-shadow:
-    0 0 5px white,
-    0 0 10px rgba(255,255,255,0.8),
-    0 0 20px rgba(255,255,255,0.3);
+    0 0 5px #ffffff,
+    0 0 10px #ffffff,
+    0 0 20px rgba(255,255,255,0.7);
 
-    animation:timelineFlicker 0.12s infinite;
+    animation:headerFlicker 2s infinite;
 }
    
 /* SUB TEXT LORE */
