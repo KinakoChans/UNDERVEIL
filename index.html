@@ -612,20 +612,6 @@ body::before{
     z-index:2;
 }
 
-.nox-message{
-
-    margin-bottom:18px;
-
-    color:#d8d8d8;
-
-    text-shadow:
-    0 0 4px rgba(255,255,255,0.08);
-
-    line-height:2;
-
-    opacity:0.95;
-}
-   
 /* =========================
    MESSAGE STYLE
 ========================= */
@@ -1136,11 +1122,7 @@ function startChatUI(){
 
         <div class="chat-subheader" id="bootSequence"></div>
 
-        <div class="chat-box">
-
-    <div id="chatMessages"></div>
-
-</div>
+        <div class="chat-box" id="chatBox"></div>
 
         <div class="chat-input-area">
 
@@ -1163,208 +1145,6 @@ function startHeaderBoot(){
     const el =
     document.getElementById("bootSequence");
 
-    // =========================
-    // DOT ANIMATION
-    // =========================
-
-    function loadingDots(baseText, loops = 4){
-
-        return new Promise((resolve) => {
-
-            const line =
-            document.createElement("div");
-
-            line.className = "glow";
-
-            el.appendChild(line);
-
-            let count = 0;
-
-            function animate(){
-
-                const dots =
-                ".".repeat(count % 4);
-
-                line.textContent =
-                "> " + baseText + dots;
-
-                count++;
-
-                if(count > loops * 4){
-
-                    resolve();
-                    return;
-                }
-
-                setTimeout(
-                    animate,
-                    500
-                );
-            }
-
-            animate();
-        });
-    }
-
-    // =========================
-    // MAIN SEQUENCE
-    // =========================
-
-    async function run(){
-
-        // SIGNAL
-        await loadingDots(
-            "SIGNAL RESTORED",
-            5
-        );
-
-        await new Promise(r =>
-            setTimeout(r, 2500)
-        );
-
-        // MEMORY
-        await loadingDots(
-            "MEMORY FRAGMENTS DETECTED",
-            5
-        );
-
-        await new Promise(r =>
-            setTimeout(r, 3200)
-        );
-
-        // ENTITY
-        await loadingDots(
-            'ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
-            6
-        );
-
-        await new Promise(r =>
-            setTimeout(r, 4000)
-        );
-    }
-
-    run().then(() => {
-
-        startNoxDialogue();
-
-    });
-   }
-   
-   function startNoxDialogue(){
-
-    const chat =
-    document.getElementById("chatMessages");
-
-    // =========================
-    // TYPE MESSAGE
-    // =========================
-
-    function typeMessage(parts, speed = 85){
-
-        return new Promise((resolve) => {
-
-            const msg =
-            document.createElement("div");
-
-            msg.className =
-            "nox-message";
-
-            chat.appendChild(msg);
-
-            const cursor =
-            document.createElement("span");
-
-            cursor.className =
-            "cursor";
-
-            cursor.textContent = "█";
-
-            msg.appendChild(cursor);
-
-            let current = 0;
-
-            async function typePart(){
-
-                const text =
-                parts[current];
-
-                let i = 0;
-
-                function typing(){
-
-                    if(i >= text.length){
-
-                        current++;
-
-                        // selesai semua part
-                        if(current >= parts.length){
-
-                            resolve();
-                            return;
-                        }
-
-                        setTimeout(() => {
-
-                            typePart();
-
-                        }, 1800);
-
-                        return;
-                    }
-
-                    const node =
-                    document.createTextNode(
-                        text.charAt(i)
-                    );
-
-                    msg.insertBefore(
-                        node,
-                        cursor
-                    );
-
-                    i++;
-
-                    setTimeout(
-                        typing,
-                        speed
-                    );
-                }
-
-                typing();
-            }
-
-            typePart();
-        });
-    }
-
-    // =========================
-    // SEQUENCE
-    // =========================
-
-    async function run(){
-
-        // FIRST MESSAGE
-        await typeMessage([
-            "[ NØX ] : ...you finally",
-            " returned."
-        ]);
-
-        // LONG PAUSE
-        await new Promise(r =>
-            setTimeout(r, 5000)
-        );
-
-        // SECOND MESSAGE
-        await typeMessage([
-            "[ NØX ] : this timeline",
-            " is unstable."
-        ]);
-
-    }
-
-    run();
-        }
-   
     // =========================
     // TYPEWRITER
     // =========================
@@ -1454,118 +1234,41 @@ function startHeaderBoot(){
 
     async function run(){
 
-    // =========================
-    // SIGNAL
-    // =========================
+        // SIGNAL
+        await loadingDots(
+            "SIGNAL RESTORED",
+            5
+        );
 
-    await loadingDots(
-        "SIGNAL RESTORED",
-        5
-    );
+        await new Promise(r =>
+            setTimeout(r, 1800)
+        );
 
-    await new Promise(r =>
-        setTimeout(r, 1800)
-    );
+        // MEMORY
+        await loadingDots(
+            "MEMORY FRAGMENTS DETECTED",
+            5
+        );
 
-    // =========================
-    // MEMORY
-    // =========================
+        await new Promise(r =>
+            setTimeout(r, 2200)
+        );
 
-    await loadingDots(
-        "MEMORY FRAGMENTS DETECTED",
-        5
-    );
+        // ENTITY
+        await loadingDots(
+            'ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
+            6
+        );
 
-    await new Promise(r =>
-        setTimeout(r, 2200)
-    );
+        await new Promise(r =>
+            setTimeout(r, 1200)
+        );
+    }
 
-    // =========================
-    // ENTITY
-    // =========================
-
-    await loadingDots(
-        'ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
-        6
-    );
-
-    await new Promise(r =>
-        setTimeout(r, 3500)
-    );
-}
-
-/* =========================
-   START BOOT SEQUENCE
-========================= */
-
-run().then(() => {
-
-    setTimeout(() => {
-
-        startNoxDialogue();
-
-    }, 4000);
-
-});
-
-   }  
-
-function sendMessage(){
-
-    const input =
-    document.getElementById("input");
-
-    const chat =
-    document.getElementById("chatMessages");
-
-    if(!input || !chat) return;
-
-    const text =
-    input.value.trim();
-
-    if(text === "") return;
-
-    // USER MESSAGE
-    const userMsg =
-    document.createElement("div");
-
-    userMsg.className =
-    "message user";
-
-    userMsg.textContent =
-    "[ YOU ] : " + text;
-
-    chat.appendChild(userMsg);
-
-    input.value = "";
-
-    // AUTO SCROLL
-    chat.scrollTop =
-    chat.scrollHeight;
-
-    // SIMPLE AI REPLY
-    setTimeout(() => {
-
-        const aiMsg =
-        document.createElement("div");
-
-        aiMsg.className =
-        "message ai";
-
-        aiMsg.textContent =
-        '[ NØX ] : signal received...';
-
-        chat.appendChild(aiMsg);
-
-        chat.scrollTop =
-        chat.scrollHeight;
-
-    }, 1500);
-       }
-   
+    run();
+   }
+  
 </script>
 
 </body>
   </html>
-
-  
