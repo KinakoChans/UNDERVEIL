@@ -980,148 +980,57 @@ function typeChatBoot(){
 
     const el = document.getElementById("chatBootText");
 
+    const lines = [
+        "[ NØX AI SYSTEM ONLINE ]",
+        "CHAT MODE ACTIVATED..."
+    ];
+
+    let lineIndex = 0;
+    let charIndex = 0;
+    let currentLine = null;
+
     const cursor = document.createElement("span");
     cursor.className = "cursor";
     cursor.textContent = "█";
 
-    // =========================
-    // TYPEWRITER FUNCTION
-    // =========================
-    function typeLine(text, className = "", speed = 120){
+    function type(){
 
-        return new Promise((resolve) => {
+        // 💀 FIX: setelah semua line selesai → lanjut ke chat UI
+        if(lineIndex >= lines.length){
 
-            const line = document.createElement("div");
+            setTimeout(() => {
+                startChatUI();
+            }, 800);
 
-            if(className){
-                line.className = className;
-            }
+            return;
+        }
 
-            el.appendChild(line);
-            line.appendChild(cursor);
+        const text = lines[lineIndex];
 
-            let i = 0;
+        // bikin baris baru
+        if(charIndex === 0){
+            currentLine = document.createElement("div");
+            el.appendChild(currentLine);
+            currentLine.appendChild(cursor);
+        }
 
-            function typing(){
+        // selesai 1 line
+        if(charIndex >= text.length){
+            lineIndex++;
+            charIndex = 0;
+            setTimeout(type, 400);
+            return;
+        }
 
-                if(i >= text.length){
+        const node = document.createTextNode(text.charAt(charIndex));
+        currentLine.insertBefore(node, cursor);
 
-                    resolve();
-                    return;
-                }
-
-                const node =
-                document.createTextNode(text.charAt(i));
-
-                line.insertBefore(node, cursor);
-
-                i++;
-
-                setTimeout(typing, speed);
-            }
-
-            typing();
-        });
+        charIndex++;
+        setTimeout(type, 40);
     }
 
-    // =========================
-    // LOADING DOTS
-    // =========================
-    function loadingLoop(baseText, loops = 3){
-
-        return new Promise((resolve) => {
-
-            const line = document.createElement("div");
-
-            line.className = "glow";
-
-            el.appendChild(line);
-
-            let count = 0;
-
-            function animate(){
-
-                if(count >= loops * 4){
-
-                    resolve();
-                    return;
-                }
-
-                const dots = ".".repeat(count % 4);
-
-                line.textContent =
-                "> " + baseText + dots;
-
-                count++;
-
-                setTimeout(animate, 600);
-            }
-
-            animate();
-        });
-    }
-
-    // =========================
-    // SHAKE GLITCH
-    // =========================
-    function screenGlitch(){
-
-        document.body.classList.add("glitch");
-
-        setTimeout(() => {
-            document.body.classList.remove("glitch");
-        }, 1200);
-    }
-
-    // =========================
-    // SEQUENCE
-    // =========================
-    async function runBoot(){
-
-        // slow loading
-        await loadingLoop("SIGNAL RESTORED", 3);
-
-        await typeLine(
-            '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
-            "glow",
-            85
-        );
-
-        await new Promise(r => setTimeout(r, 1500));
-
-        // NØX messages
-        await typeLine(
-            '[ NØX ] : ...you finally returned.',
-            "glow",
-            110
-        );
-
-        await new Promise(r => setTimeout(r, 2000));
-
-        await typeLine(
-            '[ NØX ] : this timeline is unstable.',
-            "glow",
-            110
-        );
-
-        await new Promise(r => setTimeout(r, 2500));
-
-        // corrupted line
-        await loadingLoop(
-            '[ SYSTEM ] : corrupted memories detected',
-            2
-        );
-
-        // BIG GLITCH SHAKE
-        screenGlitch();
-
-        await new Promise(r => setTimeout(r, 1800));
-
-        startChatUI();
-    }
-
-    runBoot();
-               }
+    type();
+   }
    
 function startChatUI(){
 
@@ -1322,123 +1231,201 @@ function startUnderveilBoot(){
             if(lineIndex >= lines.length){
 
                 // aktifkan input
+
+// =========================
+// START BOOT
+// =========================
+
+createBootLine("> SIGNAL RESTORED", () => {
+
+    createBootLine("> MEMORY FRAGMENTS DETECTED", () => {
+
+        createBootLine(
+            '> ENTITY "NØX" CONNECTED TO UNDERGROUND NETWORK',
+            () => {
+
+                // jeda sebelum entity muncul
                 setTimeout(() => {
 
-                    document.getElementById("input")
-                    .disabled = false;
+                    startEntityChat();
 
-                    document.querySelector(".terminal-btn")
-                    .disabled = false;
+                }, 3500);
 
-                }, 2000);
-
-                return;
             }
+        );
+
+    });
+
+});
+}
+
+// =========================
+// ENTITY CHAT SEQUENCE
+// =========================
+
+function startEntityChat(){
+
+    const chatBox =
+    document.getElementById("chatBox");
+
+    // =========================
+    // CREATE MESSAGE
+    // =========================
+
+    function createMessage(text, className = "ai"){
+
+        return new Promise((resolve) => {
 
             const msg =
             document.createElement("div");
 
             msg.className =
-            "message ai";
+            "message " + className;
 
             chatBox.appendChild(msg);
 
-            typeChatMessage(
-                msg,
-                lines[lineIndex],
-                () => {
+            let i = 0;
 
-                    lineIndex++;
+            // cursor putih
+            const cursor =
+            document.createElement("span");
 
-                    // jeda antar pesan
-                    setTimeout(nextLine, 2200);
-                }
-            );
-        }
+            cursor.className = "cursor";
 
-        nextLine();
-    }
+            cursor.style.background = "white";
 
-    // =========================
-    // TYPE CHAT MESSAGE
-    // =========================
+            cursor.textContent = "█";
 
-    function typeChatMessage(el, text, callback){
+            msg.appendChild(cursor);
 
-        let i = 0;
+            function typing(){
 
-        const cursor =
-        document.createElement("span");
+                if(i >= text.length){
 
-        cursor.className = "cursor";
-
-        cursor.textContent = "█";
-
-        cursor.style.background = "white";
-
-        el.appendChild(cursor);
-
-        function type(){
-
-            if(i >= text.length){
-
-                cursor.remove();
-
-                if(callback){
-                    callback();
+                    resolve();
+                    return;
                 }
 
-                return;
+                const node =
+                document.createTextNode(
+                    text.charAt(i)
+                );
+
+                msg.insertBefore(node, cursor);
+
+                i++;
+
+                // SUPER LAMBAT
+                setTimeout(typing, 90);
             }
 
-            const char =
-            document.createTextNode(text.charAt(i));
-
-            el.insertBefore(char, cursor);
-
-            i++;
-
-            chatBox.scrollTop =
-            chatBox.scrollHeight;
-
-            // typing lambat
-            setTimeout(type, 45);
-        }
-
-        type();
+            typing();
+        });
     }
 
     // =========================
-    // TYPE ENTITY LINE
+    // DOT LOADING
     // =========================
 
-    function typeEntityLine(el, text, callback){
+    function corruptedLoading(){
 
-        let i = 0;
+        return new Promise((resolve) => {
 
-        function type(){
+            const msg =
+            document.createElement("div");
 
-            if(i >= text.length){
+            msg.className =
+            "message corrupted";
 
-                if(callback){
-                    callback();
+            chatBox.appendChild(msg);
+
+            let dots = 0;
+            let loops = 0;
+
+            function animate(){
+
+                if(dots > 3){
+
+                    dots = 0;
+                    loops++;
                 }
 
-                return;
+                msg.textContent =
+                "[ SYSTEM ] : corrupted memories detected" +
+                ".".repeat(dots);
+
+                dots++;
+
+                // selesai
+                if(loops >= 4){
+
+                    screenGlitch();
+
+                    resolve();
+                    return;
+                }
+
+                setTimeout(animate, 550);
             }
 
-            el.textContent +=
-            text.charAt(i);
-
-            i++;
-
-            setTimeout(type, 70);
-        }
-
-        type();
+            animate();
+        });
     }
+
+    // =========================
+    // BIG GLITCH EFFECT
+    // =========================
+
+    function screenGlitch(){
+
+        document.body.classList.add("glitch");
+
+        setTimeout(() => {
+
+            document.body.classList.remove("glitch");
+
+        }, 1800);
+    }
+
+    // =========================
+    // RUN SEQUENCE
+    // =========================
+
+    async function run(){
+
+        await createMessage(
+            "[ NØX ] : ...you finally returned."
+        );
+
+        await new Promise(r =>
+            setTimeout(r, 2400)
+        );
+
+        await createMessage(
+            "[ NØX ] : this timeline is unstable."
+        );
+
+        await new Promise(r =>
+            setTimeout(r, 3000)
+        );
+
+        await corruptedLoading();
+
+        await new Promise(r =>
+            setTimeout(r, 2500)
+        );
+
+        // aktifkan input
+        document.getElementById("input")
+        .disabled = false;
+
+        document.querySelector(".terminal-btn")
+        .disabled = false;
+    }
+
+    run();
    }
-   
+               
    </script>
 
 </body>
