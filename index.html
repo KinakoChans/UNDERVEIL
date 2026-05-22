@@ -1064,6 +1064,10 @@ body::before{
 <audio id="blipSound">
     <source src="audio/blip.mp3" type="audio/mpeg">
 </audio>
+
+<audio id="corruptedSound">
+    <source src="audio/corrupted.mp3" type="audio/mpeg">
+</audio>
    
 <!-- MAIN UNDERVEIL -->
 
@@ -1130,6 +1134,9 @@ document.getElementById("bgm");
 
 const blipSound =
 document.getElementById("blipSound");
+
+const corruptedSound =
+document.getElementById("corruptedSound");
    
 // =========================
 // WARNING GATE
@@ -1771,6 +1778,13 @@ async function systemCorruption(){
         setTimeout(r, 6000)
     );
 
+    // corruption sound
+    corruptedSound.volume = 0.55;
+
+    corruptedSound.currentTime = 0;
+
+    corruptedSound.play();
+    
     // shake layar
     document.body.classList.add("shake");
 
