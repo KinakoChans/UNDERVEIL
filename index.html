@@ -1246,6 +1246,11 @@ glitchSound.play();
         // 🔥 FIX: kalau semua line selesai → pindah ke login
         if(lineIndex >= lines.length){
 
+            // stop glitch sound
+            glitchSound.pause();
+
+            glitchSound.currentTime = 0;
+           
             setTimeout(() => {
                 setState("login"); // 👈 INI YANG NENTUIN PINDAH KE LOGIN
             }, 800);
