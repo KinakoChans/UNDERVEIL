@@ -1255,7 +1255,7 @@ glitchSound.play();
     const lines = [
         "[ SYSTEM ] Restoring underground memories...",
         "[ SYSTEM ] Timeline corruption detected...",
-        "[ SYSTEM ] Searching for entity...",
+        "__SEARCHING__",
         "[ EMELY ] ...Can you hear me?",
         "",
         "[ ACCESS GRANTED ]"
@@ -1289,6 +1289,60 @@ glitchSound.play();
 
         const text = lines[lineIndex];
 
+        // =========================
+// SEARCHING ANIMATION
+// =========================
+
+if(text === "__SEARCHING__"){
+
+    currentLineEl =
+    document.createElement("div");
+
+    bootText.appendChild(currentLineEl);
+
+    currentLineEl.appendChild(cursor);
+
+    let dots = 0;
+
+    function animateSearch(){
+
+        currentLineEl.childNodes[0]?.remove();
+
+        const content =
+        document.createTextNode(
+            "[ SYSTEM ] Searching for entity" +
+            ".".repeat(dots % 4)
+        );
+
+        currentLineEl.insertBefore(
+            content,
+            cursor
+        );
+
+        dots++;
+
+        // selesai animasi
+        if(dots > 10){
+
+            lineIndex++;
+            charIndex = 0;
+
+            setTimeout(type, 1200);
+
+            return;
+        }
+
+        setTimeout(
+            animateSearch,
+            500
+        );
+    }
+
+    animateSearch();
+
+    return;
+}
+       
         // 🔥 buat line baru
         if(charIndex === 0){
 
@@ -1316,7 +1370,7 @@ glitchSound.play();
        
         charIndex++;
 
-        setTimeout(type, 35);
+        setTimeout(type, 90);
     }
 
     type();
