@@ -846,58 +846,293 @@ body::before{
     background:rgba(0,0,0,0.6);
     backdrop-filter: blur(4px);
 }
-   
+
+/* =========================
+   WARNING SCREEN
+========================= */
+
+.warning-screen{
+
+    position:fixed;
+
+    width:100%;
+    height:100vh;
+
+    background:#000;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    z-index:9999;
+}
+
+/* =========================
+   WARNING BOX
+========================= */
+
+.warning-box{
+
+    width:90%;
+    max-width:850px;
+
+    padding:35px;
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    background:rgba(0,0,0,0.85);
+
+    box-shadow:
+    0 0 20px rgba(255,255,255,0.04);
+
+    text-align:center;
+
+    animation:warningFlicker 2s infinite;
+}
+
+/* =========================
+   WARNING TITLE
+========================= */
+
+.warning-title{
+
+    color:#ffffff;
+
+    font-size:18px;
+
+    margin-bottom:30px;
+
+    text-shadow:
+    0 0 8px rgba(255,255,255,0.25);
+}
+
+/* =========================
+   WARNING TEXT
+========================= */
+
+.warning-text{
+
+    color:#9a9a9a;
+
+    font-size:10px;
+
+    line-height:2.2;
+
+    margin-bottom:40px;
+
+    text-shadow:
+    0 0 6px rgba(255,255,255,0.08);
+}
+
+/* =========================
+   WARNING BUTTON
+========================= */
+
+.warning-btn{
+
+    padding:16px 28px;
+
+    border:2px solid #ffffff;
+
+    background:#000;
+
+    color:#ffffff;
+
+    font-family:'Press Start 2P', cursive;
+
+    font-size:9px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+    letter-spacing:1px;
+}
+
+.warning-btn:hover{
+
+    background:#ffffff;
+
+    color:#000000;
+
+    box-shadow:
+    0 0 18px rgba(255,255,255,0.7);
+}
+
+.warning-btn:active{
+
+    transform:scale(0.96);
+
+    box-shadow:
+    0 0 28px rgba(255,255,255,1);
+}
+
+/* =========================
+   WARNING FLICKER
+========================= */
+
+@keyframes warningFlicker{
+
+    0%,18%,22%,25%,53%,57%,100%{
+        opacity:1;
+    }
+
+    20%,24%,55%{
+        opacity:0.92;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- CRT Overlay -->
+<!-- WARNING SCREEN -->
 
-<div class="scanline"></div>
+<div class="warning-screen" id="warningScreen">
 
-<!-- Main Container -->
+    <div class="warning-box">
 
-<div class="container">
+        <div class="warning-title">
+            WARNING // UNSTABLE TIMELINE
+        </div>
 
-    <!-- Logo -->
+        <div class="warning-text">
 
-    <div class="title">
-        UNDERVEIL
+            This underground network contains corrupted memories,
+            unstable entities, and fragmented timelines.
+
+            <br><br>
+
+            Prolonged exposure may result in psychological distortion,
+            identity corruption, or permanent entrapment beneath the underground timeline.
+
+            <br><br>
+
+            Some souls never returned.
+
+            <br><br>
+
+            By continuing, you accept every consequence that follows.
+
+            <br><br>
+
+            Are you certain you wish to proceed?
+
+            <br><br>
+
+            Are you prepared to face what remains below?
+
+        </div>
+
+        <button class="warning-btn" id="proceedBtn">
+            ACCEPT THE RISK
+        </button>
+
     </div>
 
-    <!-- Greeting -->
+</div>
 
-    <div class="greeting">
+<!-- AUDIO -->
 
-        > Connection established...<br><br>
+<audio id="bgm" loop>
+    <source src="underveil.mp3" type="audio/mpeg">
+</audio>
 
-        > Welcome back, lost soul.
+<!-- MAIN UNDERVEIL -->
+
+<div id="mainUI" style="display:none;">
+
+    <!-- CRT Overlay -->
+
+    <div class="scanline"></div>
+
+    <!-- Main Container -->
+
+    <div class="container">
+
+        <!-- Logo -->
+
+        <div class="title">
+            UNDERVEIL
+        </div>
+
+        <!-- Greeting -->
+
+        <div class="greeting">
+
+            > Connection established...<br><br>
+
+            > Welcome back, lost soul.
+
+        </div>
+
+        <!-- Description -->
+
+        <div class="desc">
+
+            UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline,
+            where every choice, memory, and word echoes through the underground.
+
+        </div>
+
+        <!-- Enter Button -->
+
+        <button class="enter-btn" id="enterBtn">
+            ENTER
+        </button>
 
     </div>
-
-    <!-- Description -->
-
-    <div class="desc">
-
-        UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline,
-        where every choice, memory, and word echoes through the underground.
-
-    </div>
-
-    <!-- Enter Button -->
-
-    <button class="enter-btn" id="enterBtn">
-
-        ENTER
-
-    </button>
 
 </div>
 
 <!-- Script -->
 
 <script>
+
+const proceedBtn =
+document.getElementById("proceedBtn");
+
+const warningScreen =
+document.getElementById("warningScreen");
+
+const mainUI =
+document.getElementById("mainUI");
+
+const bgm =
+document.getElementById("bgm");
+
+// =========================
+// WARNING GATE
+// =========================
+
+proceedBtn.addEventListener("click", () => {
+
+    // play bgm
+    bgm.volume = 0.35;
+
+    bgm.play();
+
+    // glow flash
+    proceedBtn.style.boxShadow =
+    "0 0 35px rgba(255,255,255,1)";
+
+    // fade warning
+    warningScreen.style.opacity = "0";
+
+    warningScreen.style.transition =
+    "1.2s";
+
+    setTimeout(() => {
+
+        warningScreen.remove();
+
+        mainUI.style.display = "block";
+
+    }, 1200);
+});
 
 const enterBtn =
 document.getElementById("enterBtn");
