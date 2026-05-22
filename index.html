@@ -383,7 +383,46 @@ body::before{
         opacity:1;
     }
 }
-   
+
+/* =========================
+   CHAT CURSOR
+========================= */
+
+.chat-cursor{
+
+    display:inline-block;
+
+    color:#dcdcdc;
+
+    font-size:inherit;
+
+    margin-left:2px;
+
+    animation:chatBlink 0.8s infinite;
+
+    text-shadow:
+    0 0 6px rgba(255,255,255,0.35);
+}
+
+/* =========================
+   CHAT CURSOR BLINK
+========================= */
+
+@keyframes chatBlink{
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:0;
+    }
+
+    100%{
+        opacity:1;
+    }
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -1284,26 +1323,29 @@ async function noxDialogue(){
 
     function createMessage(){
 
-        const msg =
-        document.createElement("div");
+    const msg =
+    document.createElement("div");
 
-        msg.className =
-        "message ai";
+    msg.className =
+    "message ai";
 
-        chatBox.appendChild(msg);
+    chatBox.appendChild(msg);
 
-        const cursor =
-        document.createElement("span");
+    // CHAT CURSOR
+    const cursor =
+    document.createElement("span");
 
-        cursor.className =
-        "cursor";
+    cursor.className =
+    "chat-cursor";
 
-        msg.appendChild(cursor);
+    cursor.innerHTML = "▋";
 
-        return {
-            msg,
-            cursor
-        };
+    msg.appendChild(cursor);
+
+    return {
+        msg,
+        cursor
+    };
     }
 
     // =========================
