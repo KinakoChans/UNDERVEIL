@@ -1331,7 +1331,12 @@ async function noxDialogue(){
 
     chatBox.appendChild(msg);
 
-    // CHAT CURSOR
+    // pindahin cursor lama
+    if(activeCursor){
+
+        activeCursor.remove();
+    }
+
     const cursor =
     document.createElement("span");
 
@@ -1341,6 +1346,9 @@ async function noxDialogue(){
     cursor.innerHTML = "▋";
 
     msg.appendChild(cursor);
+
+    // simpan cursor aktif
+    activeCursor = cursor;
 
     return {
         msg,
@@ -1413,8 +1421,6 @@ async function noxDialogue(){
         " returned."
     );
 
-    first.cursor.remove();
-
     // jeda sangat lama
     await new Promise(r =>
         setTimeout(r, 5500)
@@ -1442,9 +1448,6 @@ async function noxDialogue(){
         second.cursor,
         " is unstable."
     );
-
-    second.cursor.remove();
-   }
    
 </script>
 
