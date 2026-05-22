@@ -1124,9 +1124,6 @@ document.getElementById("mainUI");
 const bgm =
 document.getElementById("bgm");
 
-const glitchSound =
-document.getElementById("glitchSound");
-
 // =========================
 // WARNING GATE
 // =========================
@@ -1186,6 +1183,10 @@ function startTransition(){
 
         document.body.innerHTML = `
 
+        <audio id="glitchSound">
+    <source src="audio/glitch.mp3" type="audio/mpeg">
+</audio>
+
         <div class="boot-screen">
 
             <div id="bootText">
@@ -1212,6 +1213,9 @@ function typeBoot(){
     const bootText =
     document.getElementById("bootText");
 
+   const glitchSound =
+document.getElementById("glitchSound");
+   
     // play glitch sound
 glitchSound.volume = 0.45;
 
