@@ -1212,6 +1212,13 @@ function typeBoot(){
     const bootText =
     document.getElementById("bootText");
 
+    // play glitch sound
+glitchSound.volume = 0.45;
+
+glitchSound.currentTime = 0;
+
+glitchSound.play();
+   
     const lines = [
         "[ SYSTEM ] Restoring underground memories...",
         "[ SYSTEM ] Timeline corruption detected...",
