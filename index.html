@@ -1060,6 +1060,10 @@ body::before{
 <audio id="glitchSound">
     <source src="audio/glitch.mp3" type="audio/mpeg">
 </audio>
+
+<audio id="blipSound">
+    <source src="audio/blip.mp3" type="audio/mpeg">
+</audio>
    
 <!-- MAIN UNDERVEIL -->
 
@@ -1124,6 +1128,9 @@ document.getElementById("mainUI");
 const bgm =
 document.getElementById("bgm");
 
+const blipSound =
+document.getElementById("blipSound");
+   
 // =========================
 // WARNING GATE
 // =========================
@@ -1157,6 +1164,21 @@ proceedBtn.addEventListener("click", () => {
 const enterBtn =
 document.getElementById("enterBtn");
 
+// =========================
+// TYPE SOUND
+// =========================
+
+function playBlip(){
+
+    blipSound.pause();
+
+    blipSound.currentTime = 0;
+
+    blipSound.volume = 0.22;
+
+    blipSound.play();
+                            }
+   
 /* =========================
    ENTER EVENT
 ========================= */
@@ -1283,6 +1305,8 @@ glitchSound.play();
         const charNode = document.createTextNode(text.charAt(charIndex));
         currentLineEl.insertBefore(charNode, cursor);
 
+        playBlip();
+       
         charIndex++;
 
         setTimeout(type, 35);
@@ -1467,6 +1491,8 @@ function typeChatBoot(){
         const node = document.createTextNode(text.charAt(charIndex));
         currentLine.insertBefore(node, cursor);
 
+        playBlip();
+       
         charIndex++;
         setTimeout(type, 40);
     }
@@ -1715,6 +1741,8 @@ async function emelyDialogue(){
                     node,
                     cursor
                 );
+
+                playBlip();
 
                 i++;
 
