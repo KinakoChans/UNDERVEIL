@@ -1269,7 +1269,7 @@ function startHeaderBoot(){
     run();
    }
 
-   // =========================
+// =========================
 // NØX CINEMATIC DIALOGUE
 // =========================
 
@@ -1278,32 +1278,47 @@ async function noxDialogue(){
     const chatBox =
     document.getElementById("chatBox");
 
-    async function typeMessage(text){
+    // =========================
+    // CREATE MESSAGE
+    // =========================
+
+    function createMessage(){
+
+        const msg =
+        document.createElement("div");
+
+        msg.className =
+        "message ai";
+
+        chatBox.appendChild(msg);
+
+        const cursor =
+        document.createElement("span");
+
+        cursor.className =
+        "cursor";
+
+        msg.appendChild(cursor);
+
+        return {
+            msg,
+            cursor
+        };
+    }
+
+    // =========================
+    // TYPE APPEND
+    // =========================
+
+    function appendTyping(target, cursor, text, speed = 90){
 
         return new Promise((resolve)=>{
-
-            const msg =
-            document.createElement("div");
-
-            msg.className =
-            "message ai";
-
-            chatBox.appendChild(msg);
-
-            const cursor =
-            document.createElement("span");
-
-            cursor.className = "cursor";
-
-            msg.appendChild(cursor);
 
             let i = 0;
 
             function typing(){
 
                 if(i >= text.length){
-
-                    cursor.remove();
 
                     resolve();
                     return;
@@ -1314,17 +1329,16 @@ async function noxDialogue(){
                     text.charAt(i)
                 );
 
-                msg.insertBefore(
+                target.insertBefore(
                     node,
                     cursor
                 );
 
                 i++;
 
-                // typing lambat
                 setTimeout(
                     typing,
-                    90
+                    speed
                 );
             }
 
@@ -1333,42 +1347,63 @@ async function noxDialogue(){
     }
 
     // =========================
-    // FIRST SENTENCE
+    // FIRST MESSAGE
     // =========================
 
-    await typeMessage(
+    const first =
+    createMessage();
+
+    await appendTyping(
+        first.msg,
+        first.cursor,
         "[ NØX ] : ...you finally"
     );
 
+    // jeda lama
     await new Promise(r =>
-        setTimeout(r, 2500)
+        setTimeout(r, 3000)
     );
 
-    await typeMessage(
-        "[ NØX ] : ...you finally returned."
+    // lanjut text yang sama
+    await appendTyping(
+        first.msg,
+        first.cursor,
+        " returned."
     );
+
+    first.cursor.remove();
 
     // jeda sangat lama
     await new Promise(r =>
-        setTimeout(r, 5000)
+        setTimeout(r, 5500)
     );
 
     // =========================
-    // SECOND SENTENCE
+    // SECOND MESSAGE
     // =========================
 
-    await typeMessage(
+    const second =
+    createMessage();
+
+    await appendTyping(
+        second.msg,
+        second.cursor,
         "[ NØX ] : this timeline"
     );
 
     await new Promise(r =>
-        setTimeout(r, 2500)
+        setTimeout(r, 3000)
     );
 
-    await typeMessage(
-        "[ NØX ] : this timeline is unstable."
+    await appendTyping(
+        second.msg,
+        second.cursor,
+        " is unstable."
     );
-               }
+
+    second.cursor.remove();
+   }
+   
 </script>
 
 </body>
