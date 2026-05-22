@@ -1263,11 +1263,112 @@ function startHeaderBoot(){
         await new Promise(r =>
             setTimeout(r, 1200)
         );
+       await noxDialogue();
     }
 
     run();
    }
-  
+
+   // =========================
+// NØX CINEMATIC DIALOGUE
+// =========================
+
+async function noxDialogue(){
+
+    const chatBox =
+    document.getElementById("chatBox");
+
+    async function typeMessage(text){
+
+        return new Promise((resolve)=>{
+
+            const msg =
+            document.createElement("div");
+
+            msg.className =
+            "message ai";
+
+            chatBox.appendChild(msg);
+
+            const cursor =
+            document.createElement("span");
+
+            cursor.className = "cursor";
+
+            msg.appendChild(cursor);
+
+            let i = 0;
+
+            function typing(){
+
+                if(i >= text.length){
+
+                    cursor.remove();
+
+                    resolve();
+                    return;
+                }
+
+                const node =
+                document.createTextNode(
+                    text.charAt(i)
+                );
+
+                msg.insertBefore(
+                    node,
+                    cursor
+                );
+
+                i++;
+
+                // typing lambat
+                setTimeout(
+                    typing,
+                    90
+                );
+            }
+
+            typing();
+        });
+    }
+
+    // =========================
+    // FIRST SENTENCE
+    // =========================
+
+    await typeMessage(
+        "[ NØX ] : ...you finally"
+    );
+
+    await new Promise(r =>
+        setTimeout(r, 2500)
+    );
+
+    await typeMessage(
+        "[ NØX ] : ...you finally returned."
+    );
+
+    // jeda sangat lama
+    await new Promise(r =>
+        setTimeout(r, 5000)
+    );
+
+    // =========================
+    // SECOND SENTENCE
+    // =========================
+
+    await typeMessage(
+        "[ NØX ] : this timeline"
+    );
+
+    await new Promise(r =>
+        setTimeout(r, 2500)
+    );
+
+    await typeMessage(
+        "[ NØX ] : this timeline is unstable."
+    );
+               }
 </script>
 
 </body>
