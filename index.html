@@ -1068,6 +1068,18 @@ body::before{
 <audio id="corruptedSound">
     <source src="audio/corrupted.mp3" type="audio/mpeg">
 </audio>
+
+<audio id="enterSound">
+    <source src="audio/buttonenter.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="loginSound">
+    <source src="audio/buttonlogin.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="chatSound">
+    <source src="audio/buttonchat.mp3" type="audio/mpeg">
+</audio>
    
 <!-- MAIN UNDERVEIL -->
 
@@ -1137,6 +1149,15 @@ document.getElementById("blipSound");
 
 const corruptedSound =
 document.getElementById("corruptedSound");
+
+const enterSound =
+document.getElementById("enterSound");
+
+const loginSound =
+document.getElementById("loginSound");
+
+const chatSound =
+document.getElementById("chatSound");
    
 // =========================
 // WARNING GATE
@@ -1191,6 +1212,12 @@ function playBlip(){
 ========================= */
 
 enterBtn.addEventListener("click", () => {
+
+    enterSound.volume = 0.45;
+
+    enterSound.currentTime = 0;
+
+    enterSound.play();
 
     startTransition();
 
@@ -1414,6 +1441,13 @@ function handleLogin(){
     // =========================
     // LOGIN VALID
     // =========================
+    
+    loginSound.volume = 0.45;
+
+    loginSound.currentTime = 0;
+
+    loginSound.play();
+   
     if(u === "Emely" && p === "emely123"){
         setState("chat");
     } else {
@@ -1507,6 +1541,19 @@ function typeChatBoot(){
     type();
 }
 
+// =========================
+// CHAT BUTTON SOUND
+// =========================
+
+function playChatSound(){
+
+    chatSound.volume = 0.4;
+
+    chatSound.currentTime = 0;
+
+    chatSound.play();
+}
+   
 function startChatUI(){
 
     mainUI.innerHTML = `
@@ -1524,8 +1571,8 @@ function startChatUI(){
 
             <input id="input" placeholder="TYPE MESSAGE..." class="terminal-input"/>
 
-            <button onclick="sendMessage()" class="terminal-btn">
-                SEND
+            <button onclick="playChatSound(); sendMessage()" class="terminal-btn">
+               SEND
             </button>
 
         </div>
