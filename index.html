@@ -545,6 +545,42 @@ body::before{
 }
 
 /* =========================
+   LOGIN INPUT
+========================= */
+
+.login-input{
+
+    background:#000;
+
+    color:#ff2b2b;
+
+    border:1px solid #ff2b2b;
+
+    padding:12px;
+
+    width:260px;
+
+    font-family:'Press Start 2P', monospace;
+
+    font-size:10px;
+
+    outline:none;
+
+    text-transform:uppercase;
+
+    box-shadow:0 0 10px rgba(255,0,0,0.25);
+
+    transition:0.2s;
+}
+
+.login-input:focus{
+
+    border-color:#ff5555;
+
+    box-shadow:0 0 18px rgba(255,0,0,0.7);
+}
+   
+/* =========================
    UNDERVEIL CHAT UI
 ========================= */
 
@@ -1747,11 +1783,11 @@ function showLogin(){
                 [ SYSTEM ] AUTH REQUIRED
             </div>
 
-            <input id="username" class="terminal-input" placeholder="USERNAME">
+            <input id="username" class="login-input" placeholder="USERNAME">
 
             <br><br>
 
-            <input id="password" type="password" class="terminal-input" placeholder="PASSWORD">
+            <input id="password" type="password" class="login-input" placeholder="PASSWORD">
 
             <br><br>
 
