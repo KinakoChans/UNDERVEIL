@@ -749,14 +749,11 @@ body::before{
 ========================= */
 
 .chat-input-area{
-
     display:flex;
-
+    align-items:stretch;
     border-top:1px solid rgba(255,255,255,0.08);
-
-    z-index:2;
 }
-
+   
 /* =========================
    INPUT
 ========================= */
@@ -805,8 +802,12 @@ body::before{
     cursor:pointer;
 
     transition:0.2s;
-}
 
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+   
 .terminal-btn:hover{
 
     background:white;
@@ -814,6 +815,12 @@ body::before{
     color:black;
 }
 
+.terminal-input,
+.terminal-btn{
+    height:48px;
+    box-sizing:border-box;
+}
+   
 /* =========================
    GLOW TEXT
 ========================= */
