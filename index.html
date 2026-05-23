@@ -773,11 +773,14 @@ body::before{
 
 .chat-input-area{
     display:flex;
-    align-items:stretch; /* 🔥 penting biar sejajar */
+    align-items:stretch;
+
+    height:48px; /* 🔥 PENTING: lock tinggi */
+
     border-top:1px solid rgba(255,255,255,0.08);
     z-index:2;
 }
-
+   
 /* =========================
    INPUT
 ========================= */
@@ -834,6 +837,13 @@ body::before{
 .terminal-btn:hover{
     background:white;
     color:black;
+}
+
+.terminal-input,
+.terminal-btn{
+    margin:0;        /* 🔥 hapus gap default */
+    padding-top:0;
+    padding-bottom:0;
 }
    
 /* =========================
