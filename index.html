@@ -1020,6 +1020,27 @@ body::before{
 
     pointer-events:none;
 }
+
+/* =========================
+   CHAT MATRIX
+========================= */
+
+#chatMatrix{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:0;
+
+    opacity:0.08;
+
+    pointer-events:none;
+}
    
 </style>
 </head>
@@ -1476,6 +1497,93 @@ function startMatrixRain(){
 
     setInterval(draw, 45);
 }
+
+// =========================
+// CHAT MATRIX EFFECT
+// =========================
+
+function startChatMatrix(){
+
+    const canvas =
+    document.getElementById("chatMatrix");
+
+    const ctx =
+    canvas.getContext("2d");
+
+    canvas.width =
+    window.innerWidth;
+
+    canvas.height =
+    window.innerHeight;
+
+    const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    const fontSize = 16;
+
+    const columns =
+    canvas.width / fontSize;
+
+    const drops = [];
+
+    for(let i = 0; i < columns; i++){
+
+        drops[i] = 1;
+    }
+
+    function draw(){
+
+        ctx.fillStyle =
+        "rgba(0,0,0,0.05)";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        ctx.fillStyle =
+        "#ffffff";
+
+        ctx.shadowColor =
+        "#ffffff";
+
+        ctx.shadowBlur = 8;
+
+        ctx.font =
+        fontSize + "px monospace";
+
+        for(let i = 0; i < drops.length; i++){
+
+            const text =
+            chars.charAt(
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            );
+
+            ctx.fillText(
+                text,
+                i * fontSize,
+                drops[i] * fontSize
+            );
+
+            if(
+                drops[i] * fontSize >
+                canvas.height &&
+                Math.random() > 0.975
+            ){
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 50);
+       }
    
 // =========================
 // LOGIN UI (GLITCH STYLE)
@@ -1673,6 +1781,8 @@ function startChatUI(){
     mainUI.innerHTML = `
     <div class="chat-container">
 
+      <canvas id="chatMatrix"></canvas>
+
         <div class="chat-header">
             <span class="glow">UNDERVEIL // TIMELINE_01</span>
         </div>
@@ -1695,6 +1805,8 @@ function startChatUI(){
     `;
    
    startHeaderBoot();
+
+   startChatMatrix();
   }
 
 function startHeaderBoot(){
