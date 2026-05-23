@@ -349,7 +349,7 @@ body::before{
 }
 
 /* =========================
-   TERMINAL CURSOR
+   BUTTON LOGIN
 ========================= */
    
 .login-btn{
@@ -374,36 +374,42 @@ body::before{
     background 0.12s,
     color 0.12s,
     box-shadow 0.12s;
+
+    -webkit-tap-highlight-color:transparent;
 }
 
 /* =========================
    LOGIN BUTTON HOVER
+   (DESKTOP ONLY)
 ========================= */
 
-.login-btn:hover:not(:active){
+@media (hover:hover){
 
-    background:#ff2b2b;
+    .login-btn:hover:not(:active){
 
-    color:black;
+        background:#ff2b2b;
 
-    box-shadow:
-    0 0 15px rgba(255,0,0,0.9),
-    0 0 30px rgba(255,0,0,0.45);
+        color:black;
+
+        box-shadow:
+        0 0 15px rgba(255,0,0,0.9),
+        0 0 30px rgba(255,0,0,0.45);
+    }
 }
-   
+
 /* =========================
    LOGIN BUTTON CLICK
 ========================= */
 
 .login-btn:active{
 
-    background:#ffffff;
+    background:#ffffff !important;
 
-    color:#000000;
+    color:#000000 !important;
 
     box-shadow:
     0 0 18px rgba(255,0,0,1),
-    0 0 35px rgba(255,0,0,0.7);
+    0 0 35px rgba(255,0,0,0.7) !important;
 }
    
 /* =========================
