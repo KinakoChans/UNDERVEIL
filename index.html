@@ -2019,6 +2019,45 @@ function playChatSound(){
 
     chatSound.play();
 }
+
+// =========================
+// SEND MESSAGE
+// =========================
+
+function sendMessage(){
+
+    const input =
+    document.getElementById("input");
+
+    const chatBox =
+    document.getElementById("chatBox");
+
+    const text =
+    input.value.trim();
+
+    // kosong = batal
+    if(text === "") return;
+
+    // buat message user
+    const msg =
+    document.createElement("div");
+
+    msg.className =
+    "message user";
+
+    msg.innerHTML =
+    "[ USER ] " + text;
+
+    // masuk ke chat
+    chatBox.appendChild(msg);
+
+    // auto scroll bawah
+    chatBox.scrollTop =
+    chatBox.scrollHeight;
+
+    // reset input
+    input.value = "";
+}
    
 function startChatUI(){
 
