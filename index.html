@@ -768,25 +768,24 @@ body::before{
 }
 
 /* =========================
-   INPUT AREA
+   CHAT INPUT AREA
 ========================= */
 
 .chat-input-area{
     display:flex;
-    align-items:stretch;
+    align-items:stretch; /* 🔥 penting biar sejajar */
     border-top:1px solid rgba(255,255,255,0.08);
+    z-index:2;
 }
-   
+
 /* =========================
    INPUT
 ========================= */
 
 .terminal-input{
-
     flex:1;
 
     background:#0a0a0a;
-
     border:none;
 
     color:#dcdcdc;
@@ -794,12 +793,14 @@ body::before{
     padding:16px;
 
     font-family:'Press Start 2P';
-
     font-size:9px;
 
     outline:none;
 
     text-transform:uppercase;
+
+    height:48px;          /* 🔥 FIX SEJAJAR */
+    box-sizing:border-box;
 }
 
 /* =========================
@@ -807,30 +808,31 @@ body::before{
 ========================= */
 
 .terminal-btn{
-
     width:110px;
+    height:48px;          /* 🔥 FIX SEJAJAR */
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     background:#111;
-
     color:#dcdcdc;
 
     border:none;
-
     border-left:1px solid rgba(255,255,255,0.08);
 
     font-family:'Press Start 2P';
-
     font-size:9px;
 
     cursor:pointer;
-
     transition:0.2s;
+
+    box-sizing:border-box;
 }
-   
+
+/* hover */
 .terminal-btn:hover{
-
     background:white;
-
     color:black;
 }
    
