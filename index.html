@@ -347,6 +347,29 @@ body::before{
         opacity:1;
     }
 }
+
+/* =========================
+   TERMINAL CURSOR
+========================= */
+   
+   .login-btn{
+    width:260px;
+    padding:12px;
+    background:black;
+    color:#ff2b2b;
+    border:1px solid #ff2b2b;
+
+    font-family:'Press Start 2P';
+    font-size:10px;
+
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.login-btn:hover{
+    background:#ff2b2b;
+    color:black;
+}
    
 /* =========================
    TERMINAL CURSOR
@@ -1636,8 +1659,8 @@ function showLogin(){
 
             <br><br>
 
-            <button onclick="handleLogin()" class="terminal-btn">
-                LOGIN
+            <button onclick="handleLogin()" class="login-btn">
+               LOGIN
             </button>
 
             <div id="error" style="margin-top:15px;color:#ff2b2b;"></div>
