@@ -2021,10 +2021,19 @@ function playChatSound(){
 }
 
 // =========================
+// CHAT LOCK
+// =========================
+
+let chatLocked = true;
+
+// =========================
 // SEND MESSAGE
 // =========================
 
 function sendMessage(){
+
+    // chat masih dikunci
+    if(chatLocked) return;
 
     const input =
     document.getElementById("input");
@@ -2035,7 +2044,6 @@ function sendMessage(){
     const text =
     input.value.trim();
 
-    // kosong = batal
     if(text === "") return;
 
     // buat message user
@@ -2329,7 +2337,7 @@ async function emelyDialogue(){
 
 async function systemCorruption(){
 
-    // jeda sangat lama setelah NØX
+    // jeda sangat lama setelah EMELY
     await new Promise(r =>
         setTimeout(r, 6000)
     );
@@ -2449,7 +2457,11 @@ async function systemCorruption(){
 // corruption warning
 await systemCorruption();
    
-    // cursor terakhir tetap hidup
+    // unlock chat setelah semua sequence selesai
+
+chatLocked = false;
+
+// cursor terakhir tetap hidup
 }
    
 </script>
