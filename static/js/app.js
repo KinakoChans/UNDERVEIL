@@ -646,7 +646,57 @@ function sendMessage(){
     // reset input
     input.value = "";
 }
-   
+
+fetch("/api/chat", {
+
+method: "POST",
+
+headers: {
+"Content-Type": "application/json"
+},
+
+body: JSON.stringify({
+message: text
+})
+
+})
+
+.then(r => r.json())
+
+.then(data => {
+
+const ai =
+document.createElement("div");
+
+ai.className =
+"message ai";
+
+ai.innerHTML =
+"[ EMELY ] : " +
+data.reply;
+
+chatBox.appendChild(ai);
+
+chatBox.scrollTop =
+chatBox.scrollHeight;
+
+})
+
+.catch(() => {
+
+const ai =
+document.createElement("div");
+
+ai.className =
+"message system-error";
+
+ai.innerHTML =
+"[ SYSTEM ] Connection failed";
+
+chatBox.appendChild(ai);
+
+});
+
 function startChatUI(){
 
     mainUI.innerHTML = `
