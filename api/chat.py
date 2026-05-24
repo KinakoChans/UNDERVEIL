@@ -4,71 +4,95 @@ import os
 
 app = Flask(__name__)
 
-@app.route("/", methods=["POST"])
 
+@app.route("/", methods=["POST"])
 def handler():
 
-    msg = (
-        request
-        .json
-        .get(
+    try:
+
+        msg = request.json.get(
             "message",
             ""
         )
-    )
 
-    r = requests.post(
+        response = requests.post(
 
-        "https://openrouter.ai/api/v1/chat/completions",
+            "https://openrouter.ai/api/v1/chat/completions",
 
-        headers={
+            headers={
 
-            "Authorization":
-            f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
+                "Authorization":
+                f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
 
-            "Content-Type":
-            "application/json"
+                "Content-Type":
+                "application/json"
 
-        },
+            },
 
-        json={
+            json={
 
-            "model":
-            "qwen/qwen3-coder:free",
+                "model":
+                "qwen/qwen3-coder:free",
 
-            "messages":[
+                "messages":[
 
-                {
+                    {
 
-                    "role":"system",
+                        "role":"system",
 
-                    "content":
-                    "You are EMELY."
+                        "content":
+                        "You are EMELY."
 
-                },
+                    },
 
-                {
+                    {
 
-                    "role":"user",
+                        "role":"user",
 
-                    "content":msg
+                        "content":
+                        msg
 
-                }
+                    }
 
-            ]
+                ]
 
-        }
+            }
 
-    )
+        )
 
-    data =
-    r.json()
+        data = response.json()
 
-    return jsonify({
+        reply = (
+            data
+            .get(
+                "choices",
+                [{}]
+            )[0]
+            .get(
+                "message",
+                {}
+            )
+            .get(
+                "content",
+                "...signal lost..."
+            )
+        )
 
-        "reply":
-        data["choices"][0]["message"]["content"]
+        return jsonify({
 
-    })
+            "reply":
+            reply
+
+        })
+
+    except Exception as e:
+
+        return jsonify({
+
+            "reply":
+            str(e)
+
+        })
+
 
 app = app
