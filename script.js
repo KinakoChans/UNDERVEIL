@@ -1,41 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const button = document.getElementById("sendBtn");
+    const btn = document.getElementById("sendBtn");
     const input = document.getElementById("input");
     const output = document.getElementById("output");
 
-    button.addEventListener("click", async () => {
+    btn.addEventListener("click", async () => {
 
         const text = input.value;
 
-        if (!text) {
-            console.log("Input kosong");
-            return;
-        }
+        if (!text) return;
 
-        output.innerHTML = "Emely sedang berpikir...";
+        output.innerHTML += `<div class="message user">> ${text}</div>`;
 
-        try {
+        input.value = "";
 
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    message: text
-                })
-            });
+        const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: text
+            })
+        });
 
-            const data = await response.json();
+        const data = await res.json();
 
-            output.innerHTML = data.reply;
+        output.innerHTML += `<div class="message ai">EMELY: ${data.reply}</div>`;
 
-        } catch (err) {
-            console.log(err);
-            output.innerHTML = "Error koneksi ke Emely";
-        }
-
+        output.scrollTop = output.scrollHeight;
     });
 
 });
