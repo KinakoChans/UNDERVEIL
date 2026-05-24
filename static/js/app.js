@@ -661,7 +661,23 @@ message: text
 
 })
 
-.then(r => r.json())
+.then(async r => {
+
+console.log(
+"status:",
+r.status
+);
+
+const data =
+await r.json();
+
+console.log(
+data
+);
+
+return data;
+
+})
 
 .then(data => {
 
@@ -673,7 +689,11 @@ ai.className =
 
 ai.innerHTML =
 "[ EMELY ] : " +
-data.reply;
+(
+data.reply
+||
+"No reply"
+);
 
 chatBox.appendChild(ai);
 
@@ -682,7 +702,11 @@ chatBox.scrollHeight;
 
 })
 
-.catch(() => {
+.catch((err) => {
+
+console.log(
+err
+);
 
 const ai =
 document.createElement("div");
