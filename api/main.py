@@ -1,6 +1,8 @@
-from flask import request, jsonify
+from flask import Flask, request, jsonify
 import requests
 import os
+
+app = Flask(__name__)
 
 OPENROUTER_API_KEY = os.getenv(
     "OPENROUTER_API_KEY"
@@ -9,13 +11,16 @@ OPENROUTER_API_KEY = os.getenv(
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    data = request.get_json()
-
-    msg = data.get("message","")
-
     try:
 
-        r = requests.post(
+        data = request.get_json()
+
+        msg = data.get(
+            "message",
+            ""
+        )
+
+        response = requests.post(
 
             "https://openrouter.ai/api/v1/chat/completions",
 
@@ -37,21 +42,25 @@ def chat():
                 "messages":[
 
                     {
+
                         "role":"system",
 
-                        "content":
-                        """
+                        "content":"""
 You are EMELY.
 
 Speak naturally.
 Retro underground atmosphere.
 Short responses.
 """
+
                     },
 
                     {
+
                         "role":"user",
+
                         "content":msg
+
                     }
 
                 ]
@@ -60,23 +69,41 @@ Short responses.
 
         )
 
-        data = r.json()
+        result =
+        response.json()
 
         reply = (
-            data["choices"][0]
-            ["message"]
-            ["content"]
+            result
+            .get(
+                "choices",
+                [{}]
+            )[0]
+            .get(
+                "message",
+                {}
+            )
+            .get(
+                "content",
+                "...signal lost..."
+            )
         )
-
-        return jsonify({
-            "reply": reply
-        })
-
-    except Exception:
 
         return jsonify({
 
             "reply":
-            "[ SYSTEM ] Connection failed"
+            reply
 
         })
+
+    except Exception as e:
+
+        return jsonify({
+
+            "reply":
+            str(e)
+
+        })
+
+
+if __name__ == "__main__":
+    app.run()
