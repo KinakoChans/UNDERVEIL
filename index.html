@@ -2481,6 +2481,44 @@ chatLocked = false;
 
 // cursor terakhir tetap hidup
 }
+
+// =========================
+// DOUBLE 2-FINGER FULLSCREEN
+// =========================
+
+let lastTwoFingerTap = 0;
+
+document.addEventListener("touchstart", (e) => {
+
+    // harus 2 jari
+    if(e.touches.length !== 2) return;
+
+    const now = Date.now();
+
+    // double tap detection
+    if(now - lastTwoFingerTap < 400){
+
+        toggleFullscreen();
+    }
+
+    lastTwoFingerTap = now;
+});
+
+// =========================
+// TOGGLE FULLSCREEN
+// =========================
+
+function toggleFullscreen(){
+
+    if(!document.fullscreenElement){
+
+        document.documentElement.requestFullscreen();
+
+    } else {
+
+        document.exitFullscreen();
+    }
+   }
    
 </script>
 
