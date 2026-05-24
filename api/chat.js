@@ -1,88 +1,82 @@
-export default async function handler(req, res) {
+from flask import request, jsonify
+import requests
+import os
 
-    if (req.method !== "POST") {
-        return res.status(405).json({
-            error: "Method not allowed"
-        });
-    }
+OPENROUTER_API_KEY = os.getenv(
+    "OPENROUTER_API_KEY"
+)
 
-    try {
+@app.route("/chat", methods=["POST"])
+def chat():
 
-        const { message } = req.body;
+    data = request.get_json()
 
-        const response = await fetch(
+    msg = data.get("message","")
+
+    try:
+
+        r = requests.post(
+
             "https://openrouter.ai/api/v1/chat/completions",
-            {
-                method: "POST",
 
-                headers: {
-                    Authorization:
-                        `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            headers={
 
-                    "Content-Type":
-                        "application/json"
-                },
+                "Authorization":
+                f"Bearer {OPENROUTER_API_KEY}",
 
-                body: JSON.stringify({
+                "Content-Type":
+                "application/json"
 
-                    model:
-                    "qwen/qwen3-coder:free",
+            },
 
-                    messages: [
+            json={
 
-                        {
-                            role: "system",
+                "model":
+                "qwen/qwen3-coder:free",
 
-                            content: `
+                "messages":[
+
+                    {
+                        "role":"system",
+
+                        "content":
+                        """
 You are EMELY.
 
-You speak like a mysterious underground AI.
+Speak naturally.
+Retro underground atmosphere.
+Short responses.
+"""
+                    },
 
-Rules:
-- speak naturally
-- short responses
-- emotional but calm
-- no markdown
-- no role labels
-- respond as EMELY directly
-`
-                        },
+                    {
+                        "role":"user",
+                        "content":msg
+                    }
 
-                        {
-                            role: "user",
-                            content: message
-                        }
-
-                    ]
-
-                })
+                ]
 
             }
-        );
 
-        const data =
-        await response.json();
+        )
 
-        const reply =
-        data?.choices?.[0]?.message?.content
-        ||
-        "...signal interrupted...";
+        data = r.json()
 
-        return res.status(200).json({
-            reply
-        });
+        reply = (
+            data["choices"][0]
+            ["message"]
+            ["content"]
+        )
 
-    }
+        return jsonify({
+            "reply": reply
+        })
 
-    catch (err) {
+    except Exception:
 
-        return res.status(500).json({
+        return jsonify({
 
-            reply:
+            "reply":
             "[ SYSTEM ] Connection failed"
 
-        });
-
-    }
-
-    }
+        })
