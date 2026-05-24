@@ -1,52 +1,43 @@
-from http.server import BaseHTTPRequestHandler
 import json
 import requests
 import os
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-class handler(BaseHTTPRequestHandler):
+def handler(request):
 
-    def do_POST(self):
+    body = request.get_json(silent=True) or {}
+    user_message = body.get("message", "")
 
-        length = int(self.headers.get('content-length'))
-        body = self.rfile.read(length)
-        data = json.loads(body)
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json"
+    }
 
-        user_message = data.get("message", "")
+    payload = {
+        "model": "qwen/qwen3-coder:free",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are EMELY UNDERVEIL AI."
+            },
+            {
+                "role": "user",
+                "content": user_message
+            }
+        ]
+    }
 
-        headers = {
-            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-            "Content-Type": "application/json"
-        }
+    response = requests.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        headers=headers,
+        json=payload
+    )
 
-        payload = {
-            "model": "qwen/qwen3-coder:free",
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are EMELY UNDERVEIL AI."
-                },
-                {
-                    "role": "user",
-                    "content": user_message
-                }
-            ]
-        }
+    result = response.json()
+    reply = result["choices"][0]["message"]["content"]
 
-        response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers=headers,
-            json=payload
-        )
-
-        result = response.json()
-        reply = result["choices"][0]["message"]["content"]
-
-        self.send_response(200)
-        self.send_header("Content-type", "application/json")
-        self.end_headers()
-
-        self.wfile.write(json.dumps({
-            "reply": reply
-        }).encode())
+    return {
+        "statusCode": 200,
+        "body": json.dumps({"reply": reply})
+    }
