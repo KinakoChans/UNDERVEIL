@@ -1,46 +1,52 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from http.server import BaseHTTPRequestHandler
+import json
 import requests
 import os
 
-app = Flask(__name__)
-CORS(app)
-
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-@app.route("/api/chat", methods=["POST"])
-def chat():
+class handler(BaseHTTPRequestHandler):
 
-    data = request.json
-    user_message = data.get("message", "")
+    def do_POST(self):
 
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json"
-    }
+        length = int(self.headers.get('content-length'))
+        body = self.rfile.read(length)
+        data = json.loads(body)
 
-    payload = {
-        "model": "qwen/qwen3-coder:free",
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are EMELY, AI UNDERVEIL."
-            },
-            {
-                "role": "user",
-                "content": user_message
-            }
-        ]
-    }
+        user_message = data.get("message", "")
 
-    response = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers=headers,
-        json=payload
-    )
+        headers = {
+            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+            "Content-Type": "application/json"
+        }
 
-    result = response.json()
+        payload = {
+            "model": "qwen/qwen3-coder:free",
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are EMELY UNDERVEIL AI."
+                },
+                {
+                    "role": "user",
+                    "content": user_message
+                }
+            ]
+        }
 
-    ai_reply = result["choices"][0]["message"]["content"]
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=payload
+        )
 
-    return jsonify({"reply": ai_reply})
+        result = response.json()
+        reply = result["choices"][0]["message"]["content"]
+
+        self.send_response(200)
+        self.send_header("Content-type", "application/json")
+        self.end_headers()
+
+        self.wfile.write(json.dumps({
+            "reply": reply
+        }).encode())
