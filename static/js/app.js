@@ -647,7 +647,7 @@ function sendMessage(){
     input.value = "";
 }
 
-fetch("/api/main/chat", {
+fetch("/api/chat", {
 
 method: "POST",
 
