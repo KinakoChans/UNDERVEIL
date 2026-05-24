@@ -1,98 +1,120 @@
-from flask import Flask, request, jsonify
+from http.server import BaseHTTPRequestHandler
+import json
 import requests
 import os
 
-app = Flask(__name__)
 
+class handler(BaseHTTPRequestHandler):
 
-@app.route("/", methods=["POST"])
-def handler():
+    def do_POST(self):
 
-    try:
+        try:
 
-        msg = request.json.get(
-            "message",
-            ""
-        )
-
-        response = requests.post(
-
-            "https://openrouter.ai/api/v1/chat/completions",
-
-            headers={
-
-                "Authorization":
-                f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
-
-                "Content-Type":
-                "application/json"
-
-            },
-
-            json={
-
-                "model":
-                "qwen/qwen3-coder:free",
-
-                "messages":[
-
-                    {
-
-                        "role":"system",
-
-                        "content":
-                        "You are EMELY."
-
-                    },
-
-                    {
-
-                        "role":"user",
-
-                        "content":
-                        msg
-
-                    }
-
+            length = int(
+                self.headers[
+                    "Content-Length"
                 ]
+            )
 
-            }
+            body = self.rfile.read(
+                length
+            )
 
-        )
+            data = json.loads(
+                body
+            )
 
-        data = response.json()
-
-        reply = (
-            data
-            .get(
-                "choices",
-                [{}]
-            )[0]
-            .get(
+            msg = data.get(
                 "message",
-                {}
+                ""
             )
-            .get(
-                "content",
-                "...signal lost..."
+
+            r = requests.post(
+
+                "https://openrouter.ai/api/v1/chat/completions",
+
+                headers={
+
+                    "Authorization":
+                    f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
+
+                    "Content-Type":
+                    "application/json"
+
+                },
+
+                json={
+
+                    "model":
+                    "qwen/qwen3-coder:free",
+
+                    "messages":[
+
+                        {
+
+                            "role":"system",
+
+                            "content":
+                            "You are EMELY."
+
+                        },
+
+                        {
+
+                            "role":"user",
+
+                            "content":
+                            msg
+
+                        }
+
+                    ]
+
+                }
+
             )
-        )
 
-        return jsonify({
+            reply = (
+                r
+                .json()
+                ["choices"][0]
+                ["message"]
+                ["content"]
+            )
 
-            "reply":
-            reply
+            self.send_response(
+                200
+            )
 
-        })
+            self.send_header(
+                "Content-Type",
+                "application/json"
+            )
 
-    except Exception as e:
+            self.end_headers()
 
-        return jsonify({
+            self.wfile.write(
 
-            "reply":
-            str(e)
+                json.dumps({
 
-        })
+                    "reply":
+                    reply
 
+                }).encode()
 
-app = app
+            )
+
+        except Exception as e:
+
+            self.send_response(
+                500
+            )
+
+            self.end_headers()
+
+            self.wfile.write(
+
+                str(e)
+                .encode()
+
+            )
