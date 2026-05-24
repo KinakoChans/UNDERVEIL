@@ -1,27 +1,17 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-
 import requests
 import os
 
 app = Flask(__name__)
 CORS(app)
 
-# =========================
-# OPENROUTER API KEY
-# =========================
-
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-# =========================
-# CHAT ROUTE
-# =========================
-
-@app.route("/chat", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def chat():
 
     data = request.json
-
     user_message = data.get("message", "")
 
     headers = {
@@ -31,12 +21,10 @@ def chat():
 
     payload = {
         "model": "qwen/qwen3-coder:free",
-
         "messages": [
             {
                 "role": "system",
-                "content":
-                "You are EMELY, a mysterious underground AI entity inside UNDERVEIL timeline."
+                "content": "You are EMELY, AI UNDERVEIL."
             },
             {
                 "role": "user",
@@ -55,13 +43,4 @@ def chat():
 
     ai_reply = result["choices"][0]["message"]["content"]
 
-    return jsonify({
-        "reply": ai_reply
-    })
-
-# =========================
-# RUN
-# =========================
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return jsonify({"reply": ai_reply})
