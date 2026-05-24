@@ -2084,6 +2084,44 @@ function sendMessage(){
     // reset input
     input.value = "";
 }
+
+// =========================
+// SEND TO AI
+// =========================
+
+const response = await fetch("/chat", {
+
+    method:"POST",
+
+    headers:{
+        "Content-Type":"application/json"
+    },
+
+    body:JSON.stringify({
+        message:text
+    })
+});
+
+const data =
+await response.json();
+
+// =========================
+// AI MESSAGE
+// =========================
+
+const aiMsg =
+document.createElement("div");
+
+aiMsg.className =
+"message ai";
+
+aiMsg.innerHTML =
+"[ EMELY ] : " + data.reply;
+
+chatBox.appendChild(aiMsg);
+
+chatBox.scrollTop =
+chatBox.scrollHeight;
    
 function startChatUI(){
 
