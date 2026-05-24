@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>UNDERVEIL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+
+<!-- WARNING SCREEN -->
+
+<div class="warning-screen" id="warningScreen">
+
+    <div class="warning-box">
+
+        <div class="warning-title">
+            WARNING // UNSTABLE TIMELINE
+        </div>
+
+        <div class="warning-text">
+
+            This underground network contains corrupted memories,
+            unstable entities, and fragmented timelines.
+
+            <br><br>
+
+            Prolonged exposure may result in psychological distortion,
+            identity corruption, or permanent entrapment beneath the underground timeline.
+
+            <br><br>
+
+            Some souls never returned.
+
+            <br><br>
+
+            By continuing, you accept every consequence that follows.
+
+            <br><br>
+
+            Are you certain you wish to proceed?
+
+            <br><br>
+
+            Are you prepared to face what remains below?
+
+        </div>
+
+        <button class="warning-btn" id="proceedBtn">
+            ACCEPT THE RISK
+        </button>
+
+    </div>
+
+</div>
+
+<!-- AUDIO -->
+
+<audio id="bgm" loop>
+    <source src="audio/underviel.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="glitchSound">
+    <source src="audio/glitch.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="blipSound">
+    <source src="audio/blip.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="corruptedSound">
+    <source src="audio/corrupted.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="enterSound">
+    <source src="audio/buttonenter.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="loginSound">
+    <source src="audio/buttonlogin.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="chatSound">
+    <source src="audio/buttonchat.mp3" type="audio/mpeg">
+</audio>
+   
+<!-- MAIN UNDERVEIL -->
+
+<div id="mainUI" style="display:none;">
+
+    <!-- CRT Overlay -->
+
+    <div class="scanline"></div>
+
+    <!-- Main Container -->
+
+    <div class="container">
+
+    <div class="chat-input-area">
+
+    <input id="input" class="terminal-input" placeholder="TYPE MESSAGE..." />
+
+    <button id="sendBtn" class="terminal-btn">
+        SEND
+    </button>
+
+</div>
+
+<div id="output" class="chat-box"></div>
+
+        <!-- Logo -->
+
+        <div class="title">
+            UNDERVEIL
+        </div>
+
+        <!-- Greeting -->
+
+        <div class="greeting">
+
+            > Connection established...<br><br>
+
+            > Welcome back, lost soul.
+
+        </div>
+
+        <!-- Description -->
+
+        <div class="desc">
+
+            UNDERVEIL is a dark retro AI chat experience hidden inside a broken timeline,
+            where every choice, memory, and word echoes through the underground.
+
+        </div>
+
+        <!-- Enter Button -->
+
+        <button class="enter-btn" id="enterBtn">
+            ENTER
+        </button>
+
+    </div>
+
+</div>
+
+<!-- Script -->
+
+<script src="static/js/app.js"></script>
+
+</body>
+  </html>
+  
